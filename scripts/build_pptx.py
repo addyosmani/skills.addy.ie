@@ -126,70 +126,70 @@ def render(deck):
 
         if t == "title":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(2.1), Inches(11.5), Inches(2))
-            para(tf, s["title"], 66, FG, bold=True, first=True, spacing=1.0)
-            tf2 = textbox(slide, Inches(0.9), Inches(4.2), Inches(9.5), Inches(1.3))
-            para(tf2, s["subtitle"], 24, MUTED, first=True, spacing=1.1)
-            tf3 = textbox(slide, Inches(0.9), Inches(5.7), Inches(9), Inches(0.6))
+            tf = textbox(slide, Inches(0.9), Inches(2.05), Inches(11.6), Inches(2.1))
+            para(tf, s["title"], 58, FG, bold=True, first=True, spacing=1.0)
+            tf2 = textbox(slide, Inches(0.9), Inches(4.25), Inches(10), Inches(1.3))
+            para(tf2, s["subtitle"], 23, MUTED, first=True, spacing=1.1)
+            tf3 = textbox(slide, Inches(0.9), Inches(5.75), Inches(10), Inches(0.6))
             para(tf3, s["foot"], 16, DIM, first=True)
 
         elif t == "statement":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(2.0), Inches(11), Inches(2.4))
-            para(tf, s["text"], 52, FG, bold=True, first=True, spacing=1.02)
-            tf2 = textbox(slide, Inches(0.9), Inches(4.7), Inches(10), Inches(1.6))
-            para(tf2, s["sub"], 22, MUTED, first=True, spacing=1.2)
+            tf = textbox(slide, Inches(0.9), Inches(2.0), Inches(11.4), Inches(2.6))
+            para(tf, s["text"], 44, FG, bold=True, first=True, spacing=1.04)
+            tf2 = textbox(slide, Inches(0.9), Inches(4.95), Inches(10.4), Inches(1.6))
+            para(tf2, s["sub"], 21, MUTED, first=True, spacing=1.2)
 
         elif t == "bullets":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(1.5), Inches(11.5), Inches(1.2))
-            para(tf, s["heading"], 40, FG, bold=True, first=True, spacing=1.05)
-            tfb = textbox(slide, Inches(0.9), Inches(3.0), Inches(11.4), Inches(3.6))
+            tf = textbox(slide, Inches(0.9), Inches(1.45), Inches(11.6), Inches(1.1))
+            para(tf, s["heading"], 36, FG, bold=True, first=True, spacing=1.05)
+            tfb = textbox(slide, Inches(0.9), Inches(2.85), Inches(11.5), Inches(3.9))
             for j, b in enumerate(s["bullets"]):
                 p = tfb.paragraphs[0] if j == 0 else tfb.add_paragraph()
-                p.space_after = Pt(14)
-                p.line_spacing = 1.15
+                p.space_after = Pt(10)
+                p.line_spacing = 1.12
                 marker = p.add_run()
                 marker.text = "-  "
                 marker.font.name = MONO
-                marker.font.size = Pt(22)
+                marker.font.size = Pt(19)
                 marker.font.color.rgb = accent
                 r = p.add_run()
                 r.text = b
                 r.font.name = SANS
-                r.font.size = Pt(22)
+                r.font.size = Pt(19)
                 r.font.color.rgb = BODY
 
         elif t == "diagram":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(1.4), Inches(11.5), Inches(0.9))
-            para(tf, s["heading"], 34, FG, bold=True, first=True)
+            tf = textbox(slide, Inches(0.9), Inches(1.32), Inches(11.5), Inches(0.8))
+            para(tf, s["heading"], 30, FG, bold=True, first=True)
             name = s["image"].split("/")[-1].replace(".svg", ".png")
             png = os.path.join(DIAGRAMS, name)
             if os.path.exists(png):
-                # 16:9 image, fit width ~ 9.7in centered-left
-                pic_w = Inches(9.9)
-                pic_h = Emu(int(pic_w * 9 / 16))
-                left = Inches(0.9)
-                top = Inches(2.35)
+                # Constrain the 16:9 image by height so it never runs past the slide.
+                pic_h = Inches(4.05)
+                pic_w = Emu(round(int(pic_h) * 16 / 9))
+                left = Emu(round((int(prs.slide_width) - int(pic_w)) / 2))
+                top = Inches(2.25)
                 slide.shapes.add_picture(png, left, top, width=pic_w, height=pic_h)
-            tfc = textbox(slide, Inches(0.9), Inches(6.35), Inches(11.4), Inches(0.6))
-            para(tfc, s["caption"], 15, DIM, first=True)
+            tfc = textbox(slide, Inches(0.9), Inches(6.5), Inches(11.5), Inches(0.5))
+            para(tfc, s["caption"], 14, DIM, first=True, align=PP_ALIGN.CENTER)
 
         elif t == "code":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(1.6), Inches(11.5), Inches(1.2))
-            para(tf, s["heading"], 40, FG, bold=True, first=True, spacing=1.05)
-            cmd_box(slide, s["code"], accent, Inches(3.2))
-            tf2 = textbox(slide, Inches(0.9), Inches(4.5), Inches(10.5), Inches(1.8))
-            para(tf2, s["sub"], 21, MUTED, first=True, spacing=1.2)
+            tf = textbox(slide, Inches(0.9), Inches(1.55), Inches(11.6), Inches(1.1))
+            para(tf, s["heading"], 36, FG, bold=True, first=True, spacing=1.05)
+            cmd_box(slide, s["code"], accent, Inches(3.15))
+            tf2 = textbox(slide, Inches(0.9), Inches(4.55), Inches(10.6), Inches(1.8))
+            para(tf2, s["sub"], 20, MUTED, first=True, spacing=1.2)
 
         elif t == "commands":
             kicker(slide, s["kicker"], accent)
-            tf = textbox(slide, Inches(0.9), Inches(1.3), Inches(11.5), Inches(0.9))
-            para(tf, s["heading"], 34, FG, bold=True, first=True)
+            tf = textbox(slide, Inches(0.9), Inches(1.28), Inches(11.6), Inches(0.9))
+            para(tf, s["heading"], 32, FG, bold=True, first=True)
             rows = s["rows"]
-            table = slide.shapes.add_table(len(rows), 3, Inches(0.9), Inches(2.35),
+            table = slide.shapes.add_table(len(rows), 3, Inches(0.9), Inches(2.3),
                                            Inches(11.5), Inches(0.5 * len(rows))).table
             table.columns[0].width = Inches(3.0)
             table.columns[1].width = Inches(5.0)
@@ -212,8 +212,8 @@ def render(deck):
                         r.font.name = SANS; r.font.color.rgb = FAINT; p.alignment = PP_ALIGN.RIGHT
 
         elif t == "cta":
-            tf = textbox(slide, Inches(1.2), Inches(2.0), Inches(10.9), Inches(2), anchor=MSO_ANCHOR.MIDDLE)
-            para(tf, s["title"], 44, FG, bold=True, first=True, align=PP_ALIGN.CENTER, spacing=1.05)
+            tf = textbox(slide, Inches(1.2), Inches(1.95), Inches(10.9), Inches(2), anchor=MSO_ANCHOR.MIDDLE)
+            para(tf, s["title"], 40, FG, bold=True, first=True, align=PP_ALIGN.CENTER, spacing=1.05)
             cmd_box(slide, s["code"], accent, Inches(4.2))
             tf2 = textbox(slide, Inches(1.2), Inches(5.5), Inches(10.9), Inches(0.6))
             para(tf2, "   ".join(s["links"]), 16, DIM, first=True, font=MONO, align=PP_ALIGN.CENTER)
