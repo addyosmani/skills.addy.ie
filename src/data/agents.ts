@@ -1,4 +1,4 @@
-// Specialist review personas — from agent-skills/agents/
+// Specialist review personas - from agent-skills/agents/
 export interface Persona {
   slug: string;
   name: string;
@@ -55,7 +55,7 @@ export const commands: Command[] = [
   { cmd: '/ship', doing: 'Ship to production', principle: 'Faster is safer' },
 ];
 
-// Reference checklists — from agent-skills/references/
+// Reference checklists - from agent-skills/references/
 export const references = [
   { name: 'definition-of-done', covers: 'The standing bar every change clears.' },
   { name: 'testing-patterns', covers: 'Structure, naming, mocking, React/API/E2E examples.' },

@@ -1,4 +1,4 @@
-// Skill catalog — generated from the agent-skills repository.
+// Skill catalog - generated from the agent-skills repository.
 // Source: https://github.com/addyosmani/agent-skills
 
 export type PhaseId =
@@ -81,7 +81,7 @@ export const phases: Phase[] = [
     short: 'Ship',
     order: 6,
     hue: 145,
-    blurb: 'Deploy with confidence — rollout, rollback, observe.',
+    blurb: 'Deploy with confidence - rollout, rollback, observe.',
     command: '/ship',
   },
 ];
@@ -116,7 +116,7 @@ export const skills: Skill[] = [
     summary: 'Maps incoming work to the right skill and defines shared operating rules.',
     useWhen: 'Starting a session or deciding which skill applies.',
     description:
-      'Discovers and invokes agent skills. The meta-skill that governs how all other skills are discovered and invoked — load it first and it routes each task to the right workflow.',
+      'Discovers and invokes agent skills. The meta-skill that governs how all other skills are discovered and invoked - load it first and it routes each task to the right workflow.',
     tags: ['routing', 'workflow'],
   },
   {
@@ -145,7 +145,7 @@ export const skills: Skill[] = [
     name: 'spec-driven-development',
     phase: 'define',
     command: '/spec',
-    summary: 'Write a PRD covering objectives, structure, style, testing and boundaries — before code.',
+    summary: 'Write a PRD covering objectives, structure, style, testing and boundaries - before code.',
     useWhen: 'Starting a new project, feature, or significant change.',
     description:
       'Creates specs before coding. Writes a PRD covering objectives, commands, structure, code style, testing, and boundaries when requirements are unclear, ambiguous, or only exist as a vague idea.',
@@ -168,7 +168,7 @@ export const skills: Skill[] = [
     name: 'incremental-implementation',
     phase: 'build',
     command: '/build',
-    summary: 'Thin vertical slices — implement, test, verify, commit. Rollback-friendly changes.',
+    summary: 'Thin vertical slices - implement, test, verify, commit. Rollback-friendly changes.',
     useWhen: 'Any change touching more than one file.',
     description:
       'Delivers changes incrementally as thin vertical slices with feature flags, safe defaults, and rollback-friendly changes. Use when you’re about to write a large amount of code at once.',
@@ -191,17 +191,17 @@ export const skills: Skill[] = [
     slug: 'context-engineering',
     name: 'context-engineering',
     phase: 'build',
-    summary: 'Feed agents the right information at the right time — rules files, context packing, MCP.',
+    summary: 'Feed agents the right information at the right time - rules files, context packing, MCP.',
     useWhen: 'Starting a session, switching tasks, or when output quality drops.',
     description:
-      'Optimizes agent context setup. Configure rules files, pack context deliberately, and wire MCP integrations so the agent has exactly what it needs — no more, no less.',
+      'Optimizes agent context setup. Configure rules files, pack context deliberately, and wire MCP integrations so the agent has exactly what it needs - no more, no less.',
     tags: ['context', 'agents', 'mcp'],
   },
   {
     slug: 'source-driven-development',
     name: 'source-driven-development',
     phase: 'build',
-    summary: 'Ground every framework decision in official docs — verify, cite, flag the unverified.',
+    summary: 'Ground every framework decision in official docs - verify, cite, flag the unverified.',
     useWhen: 'You want authoritative, source-cited code for any framework or library.',
     description:
       'Grounds every implementation decision in official documentation. Verify against sources, cite them, and flag anything unverified so the code stays free of outdated patterns.',
@@ -225,7 +225,7 @@ export const skills: Skill[] = [
     summary: 'Component architecture, design systems, state, responsive, WCAG 2.1 AA accessibility.',
     useWhen: 'Building or modifying user-facing interfaces.',
     description:
-      'Builds production-quality, accessible, responsive user-facing UIs. Component architecture, design systems, state management, responsive design, and WCAG 2.1 AA accessibility — output that looks production-quality, not AI-generated.',
+      'Builds production-quality, accessible, responsive user-facing UIs. Component architecture, design systems, state management, responsive design, and WCAG 2.1 AA accessibility - output that looks production-quality, not AI-generated.',
     tags: ['frontend', 'ui', 'accessibility'],
     featured: true,
   },
@@ -243,7 +243,7 @@ export const skills: Skill[] = [
     slug: 'browser-testing-with-devtools',
     name: 'browser-testing-with-devtools',
     phase: 'verify',
-    summary: 'Chrome DevTools MCP for live runtime data — DOM, console, network, profiling.',
+    summary: 'Chrome DevTools MCP for live runtime data - DOM, console, network, profiling.',
     useWhen: 'Building or debugging anything that runs in a browser.',
     description:
       'Tests in real browsers via the Chrome DevTools MCP. Inspect the DOM, capture console errors, analyze network requests, profile performance, and verify visual output with real runtime data.',
@@ -256,7 +256,7 @@ export const skills: Skill[] = [
     summary: 'Five-step triage: reproduce, localize, reduce, fix, guard. Stop-the-line rule.',
     useWhen: 'Tests fail, builds break, or behavior is unexpected.',
     description:
-      'Guides systematic root-cause debugging. Reproduce, localize, reduce, fix, guard — with a stop-the-line rule and safe fallbacks, so you fix the cause instead of guessing.',
+      'Guides systematic root-cause debugging. Reproduce, localize, reduce, fix, guard - with a stop-the-line rule and safe fallbacks, so you fix the cause instead of guessing.',
     tags: ['debugging', 'quality'],
   },
   {
@@ -276,10 +276,10 @@ export const skills: Skill[] = [
     name: 'code-simplification',
     phase: 'review',
     command: '/code-simplify',
-    summary: 'Chesterton’s Fence, the Rule of 500 — cut complexity while preserving behavior.',
+    summary: 'Chesterton’s Fence, the Rule of 500 - cut complexity while preserving behavior.',
     useWhen: 'Code works but is harder to read or maintain than it should be.',
     description:
-      'Simplifies code for clarity. Chesterton’s Fence, the Rule of 500 — reduce complexity while preserving exact behavior when code has accumulated unnecessary weight.',
+      'Simplifies code for clarity. Chesterton’s Fence, the Rule of 500 - reduce complexity while preserving exact behavior when code has accumulated unnecessary weight.',
     tags: ['refactoring', 'quality'],
   },
   {
@@ -298,10 +298,10 @@ export const skills: Skill[] = [
     name: 'performance-optimization',
     phase: 'review',
     command: '/webperf',
-    summary: 'Measure-first — Core Web Vitals targets, profiling, bundle analysis, N+1 fixes.',
+    summary: 'Measure-first - Core Web Vitals targets, profiling, bundle analysis, N+1 fixes.',
     useWhen: 'Performance requirements exist or you suspect regressions.',
     description:
-      'Optimizes application performance across frontend, backend, queries, and databases. Measure-first approach — Core Web Vitals targets, profiling workflows, bundle analysis, and anti-pattern detection. Run the audit via /webperf.',
+      'Optimizes application performance across frontend, backend, queries, and databases. Measure-first approach - Core Web Vitals targets, profiling workflows, bundle analysis, and anti-pattern detection. Run the audit via /webperf.',
     tags: ['performance', 'web-vitals'],
     featured: true,
   },
@@ -312,7 +312,7 @@ export const skills: Skill[] = [
     summary: 'Trunk-based development, atomic commits, ~100-line changes, commit-as-save-point.',
     useWhen: 'Making any code change (always).',
     description:
-      'Structures git workflow practices. Trunk-based development, atomic commits, change sizing (~100 lines), and the commit-as-save-point pattern — plus branching, conflicts, releases, and semantic versioning.',
+      'Structures git workflow practices. Trunk-based development, atomic commits, change sizing (~100 lines), and the commit-as-save-point pattern - plus branching, conflicts, releases, and semantic versioning.',
     tags: ['git', 'workflow'],
   },
   {
@@ -322,7 +322,7 @@ export const skills: Skill[] = [
     summary: 'Shift Left, Faster is Safer, feature flags, quality-gate pipelines.',
     useWhen: 'Setting up or modifying build and deploy pipelines.',
     description:
-      'Automates CI/CD pipeline setup. Shift Left, Faster is Safer, feature flags, quality-gate pipelines, and failure feedback loops — automate the gates so speed and safety compound.',
+      'Automates CI/CD pipeline setup. Shift Left, Faster is Safer, feature flags, quality-gate pipelines, and failure feedback loops - automate the gates so speed and safety compound.',
     tags: ['ci-cd', 'automation'],
   },
   {
@@ -339,10 +339,10 @@ export const skills: Skill[] = [
     slug: 'documentation-and-adrs',
     name: 'documentation-and-adrs',
     phase: 'ship',
-    summary: 'Architecture Decision Records, API docs, inline standards — document the why.',
+    summary: 'Architecture Decision Records, API docs, inline standards - document the why.',
     useWhen: 'Making architectural decisions, changing APIs, or shipping features.',
     description:
-      'Records decisions and documentation. Architecture Decision Records, API docs, and inline documentation standards — capture the context future engineers and agents need to understand the codebase.',
+      'Records decisions and documentation. Architecture Decision Records, API docs, and inline documentation standards - capture the context future engineers and agents need to understand the codebase.',
     tags: ['documentation', 'adr'],
   },
   {
@@ -352,7 +352,7 @@ export const skills: Skill[] = [
     summary: 'Structured logging, RED metrics, OpenTelemetry tracing, symptom-based alerting.',
     useWhen: 'Adding telemetry, or shipping anything that runs in production.',
     description:
-      'Instruments code so production behavior is visible and diagnosable. Structured logging, RED metrics, OpenTelemetry tracing, and symptom-based alerting — instrument as you build, not after an incident.',
+      'Instruments code so production behavior is visible and diagnosable. Structured logging, RED metrics, OpenTelemetry tracing, and symptom-based alerting - instrument as you build, not after an incident.',
     tags: ['observability', 'production'],
   },
   {

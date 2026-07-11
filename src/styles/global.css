@@ -1,10 +1,10 @@
 /* ============================================================
-   agent-skills — design system
+   agent-skills - design system
    Vercel-dark aesthetic · restraint over decoration.
    ============================================================ */
 
 :root {
-  /* Grayscale — near-black base, layered surfaces */
+  /* Grayscale - near-black base, layered surfaces */
   --black: #000000;
   --bg: #000000;
   --bg-subtle: #0a0a0a;

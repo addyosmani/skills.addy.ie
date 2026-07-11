@@ -7,7 +7,6 @@ const platforms = [
   {
     id: 'claude-code',
     name: 'Claude Code',
-    recommended: true,
     intro: 'Install as a plugin via the marketplace, or point Claude at a local clone.',
     steps: [
       { label: 'Add the marketplace', cmd: '/plugin marketplace add addyosmani/agent-skills', prompt: '›' },
@@ -15,16 +14,6 @@ const platforms = [
     ],
     note: 'SSH errors on install? Add the marketplace with the full HTTPS URL, or run `git config --global url."https://github.com/".insteadOf git@github.com:`.',
     docHref: `${REPO_URL}#claude-code-recommended`,
-  },
-  {
-    id: 'cursor',
-    name: 'Cursor',
-    intro: 'Put workflow skills under .cursor/skills/ and short policies in .cursor/rules/*.mdc — don’t paste full skills into rules.',
-    steps: [
-      { label: 'Install via the skills CLI', cmd: INSTALL_CMD, prompt: '$' },
-    ],
-    note: 'See the Cursor setup guide for the rules-vs-skills split.',
-    docHref: `${REPO_URL}/blob/main/docs/cursor-setup.md`,
   },
   {
     id: 'codex',
@@ -37,14 +26,14 @@ const platforms = [
     docHref: `${REPO_URL}/blob/main/docs/codex-setup.md`,
   },
   {
-    id: 'gemini',
-    name: 'Gemini CLI',
-    intro: 'Install as native skills for auto-discovery, or add to GEMINI.md for persistent context.',
+    id: 'cursor',
+    name: 'Cursor',
+    intro: 'Put workflow skills under .cursor/skills/ and short policies in .cursor/rules/*.mdc - don’t paste full skills into rules.',
     steps: [
-      { label: 'Install from the repo', cmd: 'gemini skills install https://github.com/addyosmani/agent-skills.git --path skills', prompt: '$' },
+      { label: 'Install via the skills CLI', cmd: INSTALL_CMD, prompt: '$' },
     ],
-    note: 'See the Gemini CLI setup guide for local installs.',
-    docHref: `${REPO_URL}/blob/main/docs/gemini-cli-setup.md`,
+    note: 'See the Cursor setup guide for the rules-vs-skills split.',
+    docHref: `${REPO_URL}/blob/main/docs/cursor-setup.md`,
   },
   {
     id: 'antigravity',
@@ -61,7 +50,7 @@ const platforms = [
     name: 'Others',
     intro: 'Windsurf, OpenCode, Copilot, Cline, Kiro and any agent that accepts Markdown instructions all work. Skills are plain Markdown.',
     steps: [
-      { label: 'Universal — any of 70+ agents', cmd: INSTALL_CMD, prompt: '$' },
+      { label: 'Universal - any of 70+ agents', cmd: INSTALL_CMD, prompt: '$' },
     ],
     note: 'The open skills CLI installs into 70+ agents. Or copy any SKILL.md into your rules/system prompt.',
     docHref: `${REPO_URL}/blob/main/docs/getting-started.md`,
@@ -72,12 +61,12 @@ const first10 = [
   {
     n: '1',
     t: 'Install the pack',
-    d: 'One command drops all 24 skills into your agent. Nothing to configure — the meta-skill routes work to the right one.',
+    d: 'One command drops all 24 skills into your agent. Nothing to configure - the meta-skill routes work to the right one.',
   },
   {
     n: '2',
     t: 'Start with a spec',
-    d: 'Run /spec (or ask your agent to “follow spec-driven-development”). It writes a short PRD before any code — the single highest-leverage habit.',
+    d: 'Run /spec (or ask your agent to “follow spec-driven-development”). It writes a short PRD before any code - the single highest-leverage habit.',
   },
   {
     n: '3',
@@ -93,8 +82,8 @@ const first10 = [
 ---
 
 <Base
-  title="Getting started — agent-skills"
-  description="Install agent-skills into Claude Code, Cursor, Codex, Gemini CLI, and 70+ other agents. One command, then your first 10 minutes."
+  title="Getting started - agent-skills"
+  description="Install agent-skills into Claude Code, Codex, Cursor, and 70+ other agents. One command, then your first 10 minutes."
 >
   <div class="doc-hero">
     <div class="grid-bg"></div>
@@ -102,12 +91,12 @@ const first10 = [
       <span class="eyebrow">Documentation</span>
       <h1 class="doc-h1">Get started in under a minute</h1>
       <p class="doc-lede">
-        The fastest path works with any agent — one command via the open
+        The fastest path works with any agent - one command via the open
         <a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">skills CLI</a>,
         which installs into 70+ tools. Prefer a native integration? Pick your tool below.
       </p>
       <div class="doc-hero-cmd">
-        <CopyCommand command={INSTALL_CMD} size="lg" label="Fastest path — any agent" />
+        <CopyCommand command={INSTALL_CMD} size="lg" label="Fastest path - any agent" />
         <CopyCommand command={`${INSTALL_CMD} --list`} size="sm" label="Browse before installing" />
       </div>
     </div>
@@ -127,7 +116,6 @@ const first10 = [
             aria-selected={i === 0 ? 'true' : 'false'}
           >
             {p.name}
-            {p.recommended && <span class="tab-rec">Recommended</span>}
           </button>
         ))}
       </div>
@@ -158,7 +146,7 @@ const first10 = [
   <section class="container doc-section">
     <h2 class="doc-h2">Your first 10 minutes</h2>
     <p class="doc-p">
-      Don’t load all {totalSkills} skills at once — it wastes context. Follow the lifecycle and
+      Don’t load all {totalSkills} skills at once - it wastes context. Follow the lifecycle and
       the right skills activate as you go.
     </p>
     <ol class="first10">
@@ -276,15 +264,6 @@ const first10 = [
     background: var(--surface-3);
     border-color: var(--border-strong);
     color: var(--fg-bright);
-  }
-  .tab-rec {
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: rgba(82, 168, 255, 0.1);
-    padding: 2px 6px;
-    border-radius: 999px;
   }
   .tab-panel {
     padding: 28px;
