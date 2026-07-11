@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — agent-skills" noindex={true}>
+  <section class="nf">
+    <div class="grid-bg"></div>
+    <div class="container nf-inner">
+      <span class="nf-code mono">404</span>
+      <h1 class="nf-title">This page took the shortest path — and skipped a step.</h1>
+      <p class="nf-sub">
+        The page you’re after doesn’t exist. Try the catalog or head back home.
+      </p>
+      <div class="nf-cta">
+        <a href="/" class="btn btn-primary">Back home</a>
+        <a href="/skills" class="btn btn-secondary">Browse skills</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    position: relative;
+    min-height: 68vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  .nf-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 80px;
+  }
+  .nf-code {
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    padding: 4px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+  }
+  .nf-title {
+    margin-top: 24px;
+    max-width: 620px;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    letter-spacing: -0.03em;
+  }
+  .nf-sub {
+    margin-top: 16px;
+    color: var(--fg-muted);
+    max-width: 440px;
+  }
+  .nf-cta {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>
