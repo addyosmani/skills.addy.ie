@@ -1,0 +1,400 @@
+---
+import Base from '../layouts/Base.astro';
+import { REPO_URL } from '../data/skills';
+
+const cols = ['agent-skills', 'Superpowers', 'Matt Pocock’s skills'];
+const rows = [
+  {
+    label: 'Core idea',
+    values: [
+      'Encode the full senior-engineering lifecycle as skills',
+      'A complete development methodology built on composable skills',
+      'One expert’s Claude Code workflow, open-sourced',
+    ],
+  },
+  {
+    label: 'Organizing principle',
+    values: [
+      'SDLC phases (Define → Ship) behind a meta-skill router',
+      'A single disciplined loop: brainstorm, plan, execute, review',
+      'A curated toolbox of focused, composable commands',
+    ],
+  },
+  {
+    label: 'Catalog size',
+    values: ['24 skills across the whole lifecycle', '~14 skills, deep on the inner build loop', '~30 skills, grouped by area'],
+  },
+  {
+    label: 'Lifecycle coverage',
+    values: [
+      'Broad: idea → API/UI → security → perf → CI/CD → observability → launch',
+      'Deep but narrow: TDD, debugging, planning, review, skill authoring',
+      'Define & Build heavy: grilling, PRDs, issues, TDD, triage',
+    ],
+  },
+  {
+    label: 'Distinctive mechanisms',
+    values: [
+      'Anti-rationalization tables + Red Flags in every skill; parallel review personas; reference checklists; a three-tier eval framework in CI',
+      'Subagent-driven development with a task reviewer and fix loop; git-worktree isolation; skills-that-write-skills',
+      'The grilling primitive; seam-based TDD; explicit user- vs model-invoked split',
+    ],
+  },
+  {
+    label: 'Quality measurement',
+    values: [
+      'Trigger, routing & behavioral evals against the catalog (some in CI)',
+      'Pressure-testing is core; the eval suite lives in a separate repo',
+      'None shipped in-repo',
+    ],
+  },
+  {
+    label: 'Best for',
+    values: [
+      'Driving a feature through every phase with a checkpoint at each',
+      'Long, autonomous, reasoning-heavy or exploratory work',
+      'A pragmatic, battle-tested daily loop — strongest at requirements & TDD',
+    ],
+  },
+];
+
+const projects = [
+  {
+    name: 'Superpowers',
+    by: 'obra / Jesse Vincent',
+    href: 'https://github.com/obra/superpowers',
+    body: 'A full development methodology that bets on autonomy and upfront reasoning. A session runs a deliberately linear pipeline — Socratic brainstorming, executable plans, then subagent-driven execution with a task reviewer signing off before each task closes. Git worktrees isolate parallel work. Strong when you hand off a sizable chunk and want a reviewed result back; heavier on small changes.',
+  },
+  {
+    name: 'Matt Pocock’s skills',
+    by: 'mattpocock',
+    href: 'https://github.com/mattpocock/skills',
+    body: 'The Claude Code skills one very good engineer actually uses, developed in public with visible in-progress/ and deprecated/ folders. The center of gravity is grilling — a reusable one-question-at-a-time interrogation loop. Authentic and sharp; Claude-Code-first in practice, with thinner coverage past Build and no in-repo evals.',
+  },
+];
+---
+
+<Base
+  title="How it compares — agent-skills"
+  description="An honest, side-by-side map of agent-skills vs Superpowers and Matt Pocock’s skills. None is best in the abstract — it depends on the work in front of you."
+>
+  <section class="cmp-hero">
+    <div class="grid-bg"></div>
+    <div class="container cmp-hero-inner">
+      <span class="eyebrow">Honest positioning</span>
+      <h1 class="cmp-h1">How agent-skills compares</h1>
+      <p class="cmp-lede">
+        People ask how this relates to the two other collections they hear about most —
+        <strong>Superpowers</strong> and <strong>Matt Pocock’s skills</strong>. All three
+        are good, share DNA, and are worth learning from. This is an honest map of how they’re
+        <em>shaped</em> differently, so you can pick what fits — or borrow across all three.
+      </p>
+      <div class="cmp-tldr">
+        <span class="cmp-tldr-tag mono">TL;DR</span>
+        <p>
+          They optimize for different moments. <strong>agent-skills</strong> organizes the
+          whole lifecycle with review personas, anti-rationalization guards, and an in-repo eval
+          framework. <strong>Superpowers</strong> leans into autonomous, reasoning-heavy runs.
+          <strong>Matt Pocock’s skills</strong> are a sharp, opinionated daily toolkit with a
+          signature “grill me” loop.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container cmp-section">
+    <h2 class="cmp-h2">At a glance</h2>
+    <div class="table-scroll">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th></th>
+            {cols.map((c, i) => (
+              <th class:list={{ own: i === 0 }}>{c}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr>
+              <th scope="row">{row.label}</th>
+              {row.values.map((v, i) => (
+                <td class:list={{ own: i === 0 }}>{v}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="cmp-note">
+      We deliberately leave out star counts and adoption figures — they’re cited wildly
+      differently and change weekly. All three are actively used and maintained.
+    </p>
+  </section>
+
+  <section class="container cmp-section">
+    <h2 class="cmp-h2">The other two, in their own terms</h2>
+    <div class="proj-grid">
+      {projects.map((p) => (
+        <article class="card proj-card">
+          <div class="proj-head">
+            <h3>{p.name}</h3>
+            <span class="proj-by">{p.by}</span>
+          </div>
+          <p class="proj-body">{p.body}</p>
+          <a href={p.href} target="_blank" rel="noopener" class="proj-link">
+            View repo
+            <svg viewBox="0 0 16 16" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container cmp-section">
+    <div class="h2h card">
+      <span class="eyebrow">A real head-to-head</span>
+      <h2 class="cmp-h2">Superpowers vs. agent-skills, same repo &amp; prompt</h2>
+      <p class="h2h-body">
+        Om Mishra ran a controlled experiment — same model, same repo, same prompt in Claude
+        Code, changing only the skill framework. agent-skills moved to code faster
+        (~8 min vs ~12) and ran <strong>more validation passes</strong> (7 vs 5, including the
+        full test suite), which caught a compatibility issue outside the immediate feature.
+        Superpowers invested more upfront architectural reasoning. Token efficiency was
+        effectively identical. His honest conclusion: pick the tool to the task.
+      </p>
+      <a
+        href="https://www.linkedin.com/pulse/superpowers-vs-agent-skills-faster-shipping-safer-reasoning-om-mishra-dzakf/"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-secondary"
+      >
+        Read the write-up
+        <svg viewBox="0 0 16 16" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="container cmp-cta">
+    <hr class="hairline" />
+    <div class="cmp-cta-inner">
+      <div>
+        <h2 class="cmp-h2">Read the full comparison</h2>
+        <p class="cmp-p">The complete write-up covers how to decide in practice, phase by phase.</p>
+      </div>
+      <a href={`${REPO_URL}/blob/main/docs/comparison.md`} target="_blank" rel="noopener" class="btn btn-primary">
+        Full comparison on GitHub
+        <svg viewBox="0 0 16 16" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cmp-hero {
+    position: relative;
+    padding-block: clamp(48px, 8vw, 84px) 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmp-hero-inner {
+    position: relative;
+    max-width: 760px;
+  }
+  .cmp-h1 {
+    margin-top: 16px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+  .cmp-lede {
+    margin-top: 16px;
+    color: var(--fg-muted);
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    line-height: 1.6;
+  }
+  .cmp-lede strong {
+    color: var(--fg);
+  }
+  .cmp-tldr {
+    margin-top: 26px;
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .cmp-tldr-tag {
+    flex: none;
+    height: 22px;
+    padding-inline: 9px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: rgba(82, 168, 255, 0.1);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .cmp-tldr p {
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .cmp-tldr strong {
+    color: var(--fg-bright);
+  }
+
+  .cmp-section {
+    padding-block: 48px;
+  }
+  .cmp-h2 {
+    font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .cmp-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+  .cmp-table th,
+  .cmp-table td {
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmp-table thead th {
+    background: var(--bg-subtle);
+    color: var(--fg-bright);
+    font-weight: 600;
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+  }
+  .cmp-table thead th.own {
+    color: var(--accent);
+  }
+  .cmp-table tbody th {
+    color: var(--fg-dim);
+    font-weight: 500;
+    width: 160px;
+    white-space: nowrap;
+  }
+  .cmp-table td {
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+  .cmp-table td.own {
+    color: var(--fg);
+    background: rgba(82, 168, 255, 0.03);
+  }
+  .cmp-table tbody tr:last-child th,
+  .cmp-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .cmp-note {
+    margin-top: 18px;
+    color: var(--fg-faint);
+    font-size: 0.84rem;
+    line-height: 1.55;
+    max-width: 620px;
+  }
+
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .proj-card {
+    padding: 26px;
+  }
+  .proj-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .proj-head h3 {
+    font-size: 1.2rem;
+  }
+  .proj-by {
+    color: var(--fg-faint);
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+  }
+  .proj-body {
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+  }
+  .proj-link:hover {
+    color: var(--fg-bright);
+  }
+  .proj-link svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .h2h {
+    padding: clamp(28px, 4vw, 44px);
+    background: var(--bg-subtle);
+  }
+  .h2h-body {
+    margin-top: 12px;
+    color: var(--fg-muted);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    max-width: 720px;
+  }
+  .h2h-body strong {
+    color: var(--fg-bright);
+  }
+  .h2h .btn {
+    margin-top: 24px;
+  }
+
+  .cmp-cta {
+    padding-block: 24px 88px;
+  }
+  .cmp-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .cmp-p {
+    margin-top: 8px;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 720px) {
+    .proj-grid {
+      grid-template-columns: 1fr;
+    }
+    .cmp-tldr {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cmp-cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

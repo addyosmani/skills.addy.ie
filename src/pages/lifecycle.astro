@@ -1,0 +1,281 @@
+---
+import Base from '../layouts/Base.astro';
+import Lifecycle from '../components/Lifecycle.astro';
+import { phases, skillsByPhase, phaseMap } from '../data/skills';
+import { commands } from '../data/agents';
+
+const orderedGroups = skillsByPhase.filter((g) => g.skills.length > 0);
+---
+
+<Base
+  title="The lifecycle — agent-skills"
+  description="Eight slash commands mapped one-to-one to the software lifecycle: Define, Plan, Build, Verify, Review, Ship. Each activates the right skills automatically."
+>
+  <section class="lc-hero">
+    <div class="grid-bg"></div>
+    <div class="container lc-hero-inner">
+      <span class="eyebrow">The lifecycle</span>
+      <h1 class="lc-h1">Define → Ship, one command per phase</h1>
+      <p class="lc-lede">
+        Most skill packs are a flat list. agent-skills is organized the way software
+        actually gets built — six phases, eight commands, with a human checkpoint at
+        each step and the right skills loading automatically.
+      </p>
+    </div>
+  </section>
+
+  <section class="container lc-diagram-section">
+    <div class="lc-diagram-card">
+      <Lifecycle />
+    </div>
+  </section>
+
+  <section class="container lc-commands">
+    <h2 class="lc-h2">The eight commands</h2>
+    <div class="cmd-grid">
+      {commands.map((c) => (
+        <div class="card cmd-card">
+          <code class="cmd-card-cmd">{c.cmd}</code>
+          <p class="cmd-card-doing">{c.doing}</p>
+          <p class="cmd-card-principle">{c.principle}</p>
+        </div>
+      ))}
+    </div>
+    <p class="lc-auto-note">
+      <strong>Want fewer manual steps?</strong> <code>/build auto</code> generates the plan and
+      implements every task in one approved pass — you approve the plan once, then it runs
+      autonomously. It removes the human stepping <em>between</em> tasks, not the verification:
+      every task is still test-driven and committed individually, and it pauses on failures.
+    </p>
+  </section>
+
+  <section class="container lc-phases">
+    <h2 class="lc-h2">Skills by phase</h2>
+    <p class="lc-p">Reach for any skill directly, or let the meta-skill route you.</p>
+
+    <div class="phase-list">
+      {orderedGroups.map((group) => (
+        <div class="phase-block" style={`--h:${group.phase.hue}`}>
+          <div class="phase-block-head">
+            <span class="phase-marker"></span>
+            <div>
+              <div class="phase-block-top">
+                <h3 class="phase-block-title">{group.phase.label}</h3>
+                {group.phase.command && <code class="phase-block-cmd">{group.phase.command}</code>}
+              </div>
+              <p class="phase-block-blurb">{group.phase.blurb}</p>
+            </div>
+          </div>
+          <ul class="phase-skills">
+            {group.skills.map((s) => (
+              <li>
+                <a href={`/skills/${s.slug}`} class="phase-skill">
+                  <span class="phase-skill-name mono">{s.name}</span>
+                  <span class="phase-skill-sum">{s.summary}</span>
+                  <span class="phase-skill-arrow" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lc-hero {
+    position: relative;
+    padding-block: clamp(48px, 8vw, 84px) 32px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .lc-hero-inner {
+    position: relative;
+    max-width: 720px;
+  }
+  .lc-h1 {
+    margin-top: 16px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+  .lc-lede {
+    margin-top: 16px;
+    color: var(--fg-muted);
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    line-height: 1.6;
+  }
+
+  .lc-diagram-section {
+    padding-block: 48px;
+  }
+  .lc-diagram-card {
+    padding: 44px 24px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+  }
+
+  .lc-commands {
+    padding-block: 24px 56px;
+  }
+  .lc-h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .cmd-card {
+    padding: 20px;
+  }
+  .cmd-card-cmd {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+  .cmd-card-doing {
+    margin-top: 14px;
+    color: var(--fg-bright);
+    font-size: 0.94rem;
+    font-weight: 500;
+  }
+  .cmd-card-principle {
+    margin-top: 4px;
+    color: var(--fg-dim);
+    font-size: 0.82rem;
+  }
+  .lc-auto-note {
+    margin-top: 24px;
+    padding: 20px 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .lc-auto-note strong {
+    color: var(--fg-bright);
+  }
+  .lc-auto-note code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  .lc-phases {
+    padding-block: 24px 96px;
+  }
+  .lc-p {
+    color: var(--fg-muted);
+    margin-top: -18px;
+    margin-bottom: 32px;
+  }
+  .phase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .phase-block {
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .phase-block-head {
+    display: flex;
+    gap: 14px;
+    padding-bottom: 20px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-marker {
+    width: 10px;
+    height: 10px;
+    margin-top: 6px;
+    flex: none;
+    border-radius: 999px;
+    background: hsl(var(--h) 70% 60%);
+    box-shadow: 0 0 12px hsl(var(--h) 80% 60% / 0.6);
+  }
+  .phase-block-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .phase-block-title {
+    font-size: 1.2rem;
+    color: hsl(var(--h) 40% 82%);
+  }
+  .phase-block-cmd {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-dim);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .phase-block-blurb {
+    margin-top: 4px;
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+  }
+  .phase-skills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .phase-skill {
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 10px;
+    border-radius: var(--r-sm);
+    transition: background 0.15s;
+  }
+  .phase-skill:hover {
+    background: var(--surface-2);
+  }
+  .phase-skill-name {
+    color: var(--fg-bright);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .phase-skill-sum {
+    color: var(--fg-dim);
+    font-size: 0.85rem;
+  }
+  .phase-skill-arrow {
+    color: var(--fg-faint);
+    transition: transform 0.15s, color 0.15s;
+  }
+  .phase-skill:hover .phase-skill-arrow {
+    color: hsl(var(--h) 60% 70%);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 860px) {
+    .cmd-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .phase-skill {
+      grid-template-columns: 1fr auto;
+    }
+    .phase-skill-sum {
+      display: none;
+    }
+  }
+  @media (max-width: 480px) {
+    .cmd-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,429 @@
+---
+import Base from '../../layouts/Base.astro';
+import CopyCommand from '../../components/CopyCommand.astro';
+import { INSTALL_CMD, REPO_URL, totalSkills } from '../../data/skills';
+
+const platforms = [
+  {
+    id: 'claude-code',
+    name: 'Claude Code',
+    recommended: true,
+    intro: 'Install as a plugin via the marketplace, or point Claude at a local clone.',
+    steps: [
+      { label: 'Add the marketplace', cmd: '/plugin marketplace add addyosmani/agent-skills', prompt: '›' },
+      { label: 'Install the plugin', cmd: '/plugin install agent-skills@addy-agent-skills', prompt: '›' },
+    ],
+    note: 'SSH errors on install? Add the marketplace with the full HTTPS URL, or run `git config --global url."https://github.com/".insteadOf git@github.com:`.',
+    docHref: `${REPO_URL}#claude-code-recommended`,
+  },
+  {
+    id: 'cursor',
+    name: 'Cursor',
+    intro: 'Put workflow skills under .cursor/skills/ and short policies in .cursor/rules/*.mdc — don’t paste full skills into rules.',
+    steps: [
+      { label: 'Install via the skills CLI', cmd: INSTALL_CMD, prompt: '$' },
+    ],
+    note: 'See the Cursor setup guide for the rules-vs-skills split.',
+    docHref: `${REPO_URL}/blob/main/docs/cursor-setup.md`,
+  },
+  {
+    id: 'codex',
+    name: 'Codex',
+    intro: 'Install as a native Codex plugin (Codex CLI v0.122+). Invoke skills with @ in chat.',
+    steps: [
+      { label: 'Add the marketplace', cmd: 'codex plugin marketplace add addyosmani/agent-skills', prompt: '$' },
+    ],
+    note: 'Codex reads the root skills/ directory directly through .codex-plugin/plugin.json.',
+    docHref: `${REPO_URL}/blob/main/docs/codex-setup.md`,
+  },
+  {
+    id: 'gemini',
+    name: 'Gemini CLI',
+    intro: 'Install as native skills for auto-discovery, or add to GEMINI.md for persistent context.',
+    steps: [
+      { label: 'Install from the repo', cmd: 'gemini skills install https://github.com/addyosmani/agent-skills.git --path skills', prompt: '$' },
+    ],
+    note: 'See the Gemini CLI setup guide for local installs.',
+    docHref: `${REPO_URL}/blob/main/docs/gemini-cli-setup.md`,
+  },
+  {
+    id: 'antigravity',
+    name: 'Antigravity',
+    intro: 'Install as a native plugin for skills, subagents, and slash commands.',
+    steps: [
+      { label: 'Install from the repo', cmd: 'agy plugin install https://github.com/addyosmani/agent-skills.git', prompt: '$' },
+    ],
+    note: 'See the Antigravity setup guide for local-clone installs.',
+    docHref: `${REPO_URL}/blob/main/docs/antigravity-setup.md`,
+  },
+  {
+    id: 'others',
+    name: 'Others',
+    intro: 'Windsurf, OpenCode, Copilot, Cline, Kiro and any agent that accepts Markdown instructions all work. Skills are plain Markdown.',
+    steps: [
+      { label: 'Universal — any of 70+ agents', cmd: INSTALL_CMD, prompt: '$' },
+    ],
+    note: 'The open skills CLI installs into 70+ agents. Or copy any SKILL.md into your rules/system prompt.',
+    docHref: `${REPO_URL}/blob/main/docs/getting-started.md`,
+  },
+];
+
+const first10 = [
+  {
+    n: '1',
+    t: 'Install the pack',
+    d: 'One command drops all 24 skills into your agent. Nothing to configure — the meta-skill routes work to the right one.',
+  },
+  {
+    n: '2',
+    t: 'Start with a spec',
+    d: 'Run /spec (or ask your agent to “follow spec-driven-development”). It writes a short PRD before any code — the single highest-leverage habit.',
+  },
+  {
+    n: '3',
+    t: 'Build test-first',
+    d: '/build works in thin vertical slices; /test enforces red-green-refactor. Every slice is committed and verified individually.',
+  },
+  {
+    n: '4',
+    t: 'Review before merge',
+    d: '/review runs a five-axis quality gate. /ship fans out to specialist personas and returns a go / no-go.',
+  },
+];
+---
+
+<Base
+  title="Getting started — agent-skills"
+  description="Install agent-skills into Claude Code, Cursor, Codex, Gemini CLI, and 70+ other agents. One command, then your first 10 minutes."
+>
+  <div class="doc-hero">
+    <div class="grid-bg"></div>
+    <div class="container doc-hero-inner">
+      <span class="eyebrow">Documentation</span>
+      <h1 class="doc-h1">Get started in under a minute</h1>
+      <p class="doc-lede">
+        The fastest path works with any agent — one command via the open
+        <a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">skills CLI</a>,
+        which installs into 70+ tools. Prefer a native integration? Pick your tool below.
+      </p>
+      <div class="doc-hero-cmd">
+        <CopyCommand command={INSTALL_CMD} size="lg" label="Fastest path — any agent" />
+        <CopyCommand command={`${INSTALL_CMD} --list`} size="sm" label="Browse before installing" />
+      </div>
+    </div>
+  </div>
+
+  <section class="container doc-section">
+    <h2 class="doc-h2">Native setup by tool</h2>
+    <p class="doc-p">Each tool has a first-class path. Tabs below cover the most common ones.</p>
+
+    <div class="tabs" data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Platform">
+        {platforms.map((p, i) => (
+          <button
+            class:list={['tab', { active: i === 0 }]}
+            role="tab"
+            data-tab={p.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {p.name}
+            {p.recommended && <span class="tab-rec">Recommended</span>}
+          </button>
+        ))}
+      </div>
+
+      {platforms.map((p, i) => (
+        <div
+          class:list={['tab-panel', { active: i === 0 }]}
+          role="tabpanel"
+          data-panel={p.id}
+          hidden={i !== 0}
+        >
+          <p class="panel-intro">{p.intro}</p>
+          <div class="panel-steps">
+            {p.steps.map((s) => (
+              <CopyCommand command={s.cmd} prompt={s.prompt} label={s.label} size="sm" />
+            ))}
+          </div>
+          {p.note && <p class="panel-note">{p.note}</p>}
+          <a href={p.docHref} target="_blank" rel="noopener" class="panel-doclink">
+            Full {p.name} guide
+            <svg viewBox="0 0 16 16" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container doc-section">
+    <h2 class="doc-h2">Your first 10 minutes</h2>
+    <p class="doc-p">
+      Don’t load all {totalSkills} skills at once — it wastes context. Follow the lifecycle and
+      the right skills activate as you go.
+    </p>
+    <ol class="first10">
+      {first10.map((s) => (
+        <li class="first10-item">
+          <span class="first10-n mono">{s.n}</span>
+          <div>
+            <h3 class="first10-t">{s.t}</h3>
+            <p class="first10-d">{s.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="container doc-section">
+    <div class="next-cards">
+      <a href="/skills" class="card next-card">
+        <h3>Browse the catalog →</h3>
+        <p>All {totalSkills} skills, searchable and filterable by phase.</p>
+      </a>
+      <a href="/lifecycle" class="card next-card">
+        <h3>Learn the lifecycle →</h3>
+        <p>How the eight commands map to Define → Ship.</p>
+      </a>
+      <a href="/compare" class="card next-card">
+        <h3>How it compares →</h3>
+        <p>Honest positioning vs Superpowers and Matt Pocock’s skills.</p>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .doc-hero {
+    position: relative;
+    padding-block: clamp(48px, 8vw, 84px) 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-hero-inner {
+    position: relative;
+    max-width: 720px;
+  }
+  .doc-h1 {
+    margin-top: 16px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+  .doc-lede {
+    margin-top: 16px;
+    color: var(--fg-muted);
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    line-height: 1.6;
+  }
+  .doc-lede a {
+    color: var(--accent);
+  }
+  .doc-lede a:hover {
+    text-decoration: underline;
+  }
+  .doc-hero-cmd {
+    margin-top: 28px;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .doc-section {
+    padding-block: 56px;
+    max-width: 860px;
+  }
+  .doc-h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+  }
+  .doc-p {
+    margin-top: 12px;
+    margin-bottom: 32px;
+    color: var(--fg-muted);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* Tabs */
+  .tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 5px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    margin-bottom: 24px;
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding-inline: 15px;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    transition: all 0.15s;
+  }
+  .tab:hover {
+    color: var(--fg-bright);
+    background: var(--surface-2);
+  }
+  .tab.active {
+    background: var(--surface-3);
+    border-color: var(--border-strong);
+    color: var(--fg-bright);
+  }
+  .tab-rec {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(82, 168, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 999px;
+  }
+  .tab-panel {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .tab-panel.active {
+    display: block;
+  }
+  .panel-intro {
+    color: var(--fg);
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+  .panel-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .panel-note {
+    margin-top: 22px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--border-hover);
+    border-radius: var(--r-sm);
+    color: var(--fg-dim);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .panel-doclink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 22px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+  }
+  .panel-doclink:hover {
+    color: var(--fg-bright);
+  }
+  .panel-doclink svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* First 10 */
+  .first10 {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .first10-item {
+    display: flex;
+    gap: 18px;
+    padding: 22px 24px;
+    background: var(--bg);
+  }
+  .first10-n {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 8px;
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+  .first10-t {
+    font-size: 1.02rem;
+  }
+  .first10-d {
+    margin-top: 6px;
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  /* Next cards */
+  .next-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .next-card {
+    padding: 22px;
+  }
+  .next-card h3 {
+    font-size: 1rem;
+    transition: color 0.15s;
+  }
+  .next-card:hover h3 {
+    color: var(--accent);
+  }
+  .next-card p {
+    margin-top: 8px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 720px) {
+    .next-cards {
+      grid-template-columns: 1fr;
+    }
+    .tab-panel {
+      padding: 20px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll('.tab')) as HTMLButtonElement[];
+    const panels = Array.from(root.querySelectorAll('.tab-panel')) as HTMLElement[];
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.tab;
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', String(on));
+        });
+        panels.forEach((p) => {
+          const on = p.dataset.panel === id;
+          p.classList.toggle('active', on);
+          p.hidden = !on;
+        });
+      });
+    });
+  });
+</script>
