@@ -1,0 +1,60 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0d10"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+      <stop offset="0" stop-color="#52a8ff" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#52a8ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#b7b7b7"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="420" fill="url(#glow)"/>
+
+  <!-- brand -->
+  <g transform="translate(80, 84)">
+    <path d="M4 12 24 3l20 9v18l-20 9-20-9V12Z" fill="none" stroke="#52a8ff" stroke-width="2.4" stroke-linejoin="round" transform="scale(1.1)"/>
+    <path d="M24 3v36M4 12l20 9 20-9" fill="none" stroke="#52a8ff" stroke-width="2.4" stroke-linejoin="round" opacity="0.5" transform="scale(1.1)"/>
+    <text x="64" y="34" font-family="'Geist','Segoe UI',sans-serif" font-size="26" font-weight="600" fill="#ffffff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+
+  <!-- headline -->
+  <text x="80" y="300" font-family="'Geist','Segoe UI',sans-serif" font-size="76" font-weight="700" letter-spacing="-3" fill="url(#title)">Production-grade skills</text>
+  <text x="80" y="386" font-family="'Geist','Segoe UI',sans-serif" font-size="76" font-weight="700" letter-spacing="-3" fill="url(#title)">for AI coding agents.</text>
+
+  <!-- subhead -->
+  <text x="82" y="452" font-family="'Geist','Segoe UI',sans-serif" font-size="27" fill="#a1a1a1">Senior-engineer workflows and quality gates across the full lifecycle.</text>
+
+  <!-- install command chip -->
+  <g transform="translate(80, 500)">
+    <rect x="0" y="0" width="560" height="60" rx="12" fill="#0e0e0e" stroke="#2e2e2e" stroke-width="1.4"/>
+    <text x="24" y="38" font-family="'Geist Mono','SF Mono',monospace" font-size="23" fill="#52a8ff">$</text>
+    <text x="48" y="38" font-family="'Geist Mono','SF Mono',monospace" font-size="23" fill="#ededed">npx skills add addyosmani/agent-skills</text>
+  </g>
+
+  <!-- phase dots row -->
+  <g transform="translate(80, 604)" font-family="'Geist Mono',monospace" font-size="15" fill="#565656">
+    <circle cx="6" cy="-5" r="5" fill="#52a8ff"/><text x="20" y="0">DEFINE</text>
+    <circle cx="120" cy="-5" r="5" fill="#8b7dff"/><text x="134" y="0">PLAN</text>
+    <circle cx="214" cy="-5" r="5" fill="#3ed6c5"/><text x="228" y="0">BUILD</text>
+    <circle cx="316" cy="-5" r="5" fill="#f5b13a"/><text x="330" y="0">VERIFY</text>
+    <circle cx="434" cy="-5" r="5" fill="#f56ba0"/><text x="448" y="0">REVIEW</text>
+    <circle cx="556" cy="-5" r="5" fill="#4fd873"/><text x="570" y="0">SHIP</text>
+  </g>
+
+  <!-- right badge -->
+  <g transform="translate(1120, 96)" text-anchor="end">
+    <text x="0" y="0" font-family="'Geist',sans-serif" font-size="120" font-weight="700" fill="#141414">24</text>
+    <text x="0" y="34" font-family="'Geist Mono',monospace" font-size="15" fill="#565656">SKILLS · MIT</text>
+  </g>
+</svg>
