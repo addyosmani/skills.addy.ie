@@ -1,0 +1,162 @@
+---
+import { phases } from '../data/skills';
+// Ordered lifecycle phases (exclude meta).
+const flow = phases.filter((p) => p.id !== 'meta');
+const steps = [
+  { verb: 'Idea', sub: 'Refine' },
+  { verb: 'Spec', sub: 'PRD' },
+  { verb: 'Code', sub: 'Impl' },
+  { verb: 'Test', sub: 'Debug' },
+  { verb: 'QA', sub: 'Gate' },
+  { verb: 'Go', sub: 'Live' },
+];
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<div class:list={['lifecycle', { compact }]} role="img" aria-label="Development lifecycle: Define, Plan, Build, Verify, Review, Ship">
+  <div class="lc-track" aria-hidden="true"></div>
+  <ol class="lc-steps">
+    {flow.map((p, i) => (
+      <li class="lc-step" style={`--h:${p.hue};--i:${i}`}>
+        <span class="lc-phase">{p.label}</span>
+        <div class="lc-node">
+          <span class="lc-verb">{steps[i].verb}</span>
+          <span class="lc-sub">{steps[i].sub}</span>
+        </div>
+        {p.command && <code class="lc-cmd">{p.command}</code>}
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .lifecycle {
+    position: relative;
+    width: 100%;
+  }
+  .lc-track {
+    position: absolute;
+    top: 62px;
+    left: 6%;
+    right: 6%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--border-strong) 8%,
+      var(--border-strong) 92%,
+      transparent
+    );
+  }
+  .lc-track::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(205 80% 60% / 0.9),
+      hsl(175 70% 55% / 0.9),
+      hsl(40 90% 60% / 0.9),
+      hsl(340 75% 62% / 0.9),
+      hsl(145 65% 55% / 0.9),
+      transparent
+    );
+    background-size: 220% 100%;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+    mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+    opacity: 0.55;
+    animation: flow 6s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      background-position: -220% 0;
+    }
+  }
+  .lc-steps {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .lc-phase {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--h) 45% 68%);
+  }
+  .lc-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    max-width: 108px;
+    padding: 12px 8px;
+    background: var(--surface);
+    border: 1px solid hsl(var(--h) 40% 45% / 0.35);
+    border-radius: var(--r-md);
+    box-shadow: 0 0 0 4px hsl(var(--h) 60% 50% / 0.04);
+    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .lc-step:hover .lc-node {
+    border-color: hsl(var(--h) 60% 55% / 0.7);
+    transform: translateY(-2px);
+  }
+  .lc-verb {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--fg-bright);
+    letter-spacing: -0.01em;
+  }
+  .lc-sub {
+    font-size: 0.72rem;
+    color: var(--fg-dim);
+  }
+  .lc-cmd {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-dim);
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+
+  .compact .lc-node {
+    padding: 9px 6px;
+  }
+
+  @media (max-width: 720px) {
+    .lc-track {
+      display: none;
+    }
+    .lc-steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px 8px;
+    }
+  }
+  @media (max-width: 420px) {
+    .lc-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .lc-sub {
+      display: none;
+    }
+  }
+</style>

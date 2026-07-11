@@ -1,0 +1,110 @@
+---
+import type { Skill } from '../data/skills';
+import { phaseMap } from '../data/skills';
+
+interface Props {
+  skill: Skill;
+}
+const { skill } = Astro.props;
+const phase = phaseMap[skill.phase];
+---
+
+<a
+  href={`/skills/${skill.slug}`}
+  class="card skill-card"
+  style={`--h:${phase.hue}`}
+  data-phase={skill.phase}
+  data-name={skill.name}
+  data-tags={skill.tags.join(' ')}
+  data-search={`${skill.name} ${skill.summary} ${skill.useWhen} ${skill.tags.join(' ')}`.toLowerCase()}
+>
+  <div class="sc-top">
+    <span class="chip phase-chip"><span class="phase-dot"></span>{phase.label}</span>
+    {skill.command && <span class="sc-cmd mono">{skill.command}</span>}
+  </div>
+  <h3 class="sc-name mono">{skill.name}</h3>
+  <p class="sc-summary">{skill.summary}</p>
+  <div class="sc-foot">
+    <span class="sc-when">{skill.useWhen}</span>
+    <span class="sc-arrow" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+        <path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+</a>
+
+<style>
+  .skill-card {
+    display: flex;
+    flex-direction: column;
+    padding: 18px 18px 16px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, hsl(var(--h) 70% 60% / 0.22), transparent 45%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease);
+    pointer-events: none;
+  }
+  .skill-card:hover::before {
+    opacity: 1;
+  }
+  .sc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .sc-cmd {
+    font-size: 12px;
+    color: var(--fg-dim);
+  }
+  .sc-name {
+    font-size: 0.98rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg-bright);
+    word-break: break-word;
+  }
+  .sc-summary {
+    margin-top: 8px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .sc-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .sc-when {
+    color: var(--fg-faint);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+  .sc-arrow {
+    flex: none;
+    color: var(--fg-dim);
+    transition: transform 0.2s var(--ease), color 0.2s;
+  }
+  .skill-card:hover .sc-arrow {
+    color: hsl(var(--h) 70% 72%);
+    transform: translateX(3px);
+  }
+</style>

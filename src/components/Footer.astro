@@ -1,0 +1,176 @@
+---
+import { REPO_URL } from '../data/skills';
+const year = 2026;
+const cols = [
+  {
+    title: 'Product',
+    links: [
+      { href: '/skills', label: 'Skills catalog' },
+      { href: '/lifecycle', label: 'The lifecycle' },
+      { href: '/compare', label: 'How it compares' },
+      { href: '/docs/getting-started', label: 'Getting started' },
+    ],
+  },
+  {
+    title: 'Setup',
+    links: [
+      { href: '/docs/getting-started#claude-code', label: 'Claude Code' },
+      { href: '/docs/getting-started#cursor', label: 'Cursor' },
+      { href: '/docs/getting-started#codex', label: 'Codex' },
+      { href: '/docs/getting-started#gemini', label: 'Gemini CLI' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: REPO_URL, label: 'GitHub ↗', external: true },
+      { href: REPO_URL + '/blob/main/CONTRIBUTING.md', label: 'Contributing ↗', external: true },
+      { href: REPO_URL + '/tree/main/evals', label: 'Evals framework ↗', external: true },
+      { href: 'https://addyosmani.com', label: 'addyosmani.com ↗', external: true },
+    ],
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+              <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M12 3v18M4 7.5l8 4.5 8-4.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity="0.55"/>
+            </svg>
+          </span>
+          <span>agent<span class="brand-dim">-skills</span></span>
+        </a>
+        <p class="footer-tag">
+          Production-grade engineering skills for AI coding agents. Encode senior-engineer
+          workflows across the full lifecycle.
+        </p>
+        <p class="footer-cmd mono">npx skills add addyosmani/agent-skills</p>
+      </div>
+      {cols.map((col) => (
+        <nav class="footer-col" aria-label={col.title}>
+          <h3>{col.title}</h3>
+          <ul>
+            {col.links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}
+                  >{l.label}</a
+                >
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <hr class="hairline" />
+    <div class="footer-bottom">
+      <p>© {year} agent-skills · MIT licensed</p>
+      <p>
+        Built by <a href="https://github.com/addyosmani" target="_blank" rel="noopener">Addy Osmani</a>
+        &amp; contributors
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-subtle);
+    padding-block: 56px 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg-bright);
+  }
+  .brand-mark {
+    color: var(--accent);
+  }
+  .brand-dim {
+    color: var(--fg-dim);
+  }
+  .footer-tag {
+    margin-top: 16px;
+    max-width: 320px;
+    color: var(--fg-dim);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .footer-cmd {
+    margin-top: 16px;
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+  }
+  .footer-col h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-dim);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-col a {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover {
+    color: var(--fg-bright);
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 28px;
+    color: var(--fg-faint);
+    font-size: 0.82rem;
+  }
+  .footer-bottom a {
+    color: var(--fg-dim);
+  }
+  .footer-bottom a:hover {
+    color: var(--fg-bright);
+  }
+  @media (max-width: 780px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>

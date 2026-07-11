@@ -1,0 +1,358 @@
+---
+import Base from '../../layouts/Base.astro';
+import CopyCommand from '../../components/CopyCommand.astro';
+import SkillCard from '../../components/SkillCard.astro';
+import { skills, phaseMap, REPO_URL, INSTALL_CMD } from '../../data/skills';
+
+export function getStaticPaths() {
+  return skills.map((skill) => ({
+    params: { slug: skill.slug },
+    props: { skill },
+  }));
+}
+
+const { skill } = Astro.props;
+const phase = phaseMap[skill.phase];
+const related = skills
+  .filter((s) => s.phase === skill.phase && s.slug !== skill.slug)
+  .slice(0, 3);
+const skillCmd = `${INSTALL_CMD} --skill ${skill.slug}`;
+const ghUrl = `${REPO_URL}/blob/main/skills/${skill.slug}/SKILL.md`;
+
+const anatomy = [
+  { k: 'Overview', v: 'What this skill does' },
+  { k: 'When to Use', v: 'Triggering conditions' },
+  { k: 'Process', v: 'Step-by-step workflow' },
+  { k: 'Rationalizations', v: 'Excuses + rebuttals' },
+  { k: 'Red Flags', v: 'Signs something’s wrong' },
+  { k: 'Verification', v: 'Evidence requirements' },
+];
+---
+
+<Base
+  title={`${skill.name} — agent-skills`}
+  description={skill.description}
+>
+  <article class="detail">
+    <div class="detail-grid-bg grid-bg"></div>
+    <div class="container detail-head" style={`--h:${phase.hue}`}>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/skills">Skills</a>
+        <span aria-hidden="true">/</span>
+        <span class="crumb-phase">{phase.label}</span>
+      </nav>
+
+      <div class="detail-top">
+        <span class="chip phase-chip"><span class="phase-dot"></span>{phase.label} phase</span>
+        {skill.command && <span class="detail-cmd-badge mono">{skill.command}</span>}
+      </div>
+
+      <h1 class="detail-name mono">{skill.name}</h1>
+      <p class="detail-summary">{skill.description}</p>
+
+      <div class="detail-when">
+        <span class="detail-when-label">Use when</span>
+        <span>{skill.useWhen}</span>
+      </div>
+
+      <div class="detail-tags">
+        {skill.tags.map((t) => <span class="chip">#{t}</span>)}
+      </div>
+    </div>
+
+    <div class="container detail-body">
+      <div class="detail-main">
+        <section class="panel">
+          <h2 class="panel-title">Install just this skill</h2>
+          <p class="panel-lede">
+            Grab it on its own via the open <a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">skills CLI</a>,
+            or install the whole pack.
+          </p>
+          <div class="panel-cmds">
+            <CopyCommand command={skillCmd} label="This skill only" size="sm" />
+            <CopyCommand command={INSTALL_CMD} label="All skills" size="sm" />
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">How this skill is structured</h2>
+          <p class="panel-lede">
+            Every skill follows the same anatomy — a workflow the agent follows, not a doc it reads.
+          </p>
+          <ul class="anatomy">
+            {anatomy.map((a, i) => (
+              <li class="anatomy-row">
+                <span class="anatomy-num mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="anatomy-k">{a.k}</span>
+                <span class="anatomy-v">{a.v}</span>
+              </li>
+            ))}
+          </ul>
+          <a href={ghUrl} target="_blank" rel="noopener" class="btn btn-primary panel-btn">
+            Read the full SKILL.md
+            <svg viewBox="0 0 16 16" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </section>
+      </div>
+
+      <aside class="detail-side">
+        <div class="side-card">
+          <h3 class="side-title">{phase.label} phase</h3>
+          <p class="side-blurb">{phase.blurb}</p>
+          {phase.command && (
+            <div class="side-row">
+              <span>Command</span>
+              <code class="mono">{phase.command}</code>
+            </div>
+          )}
+          <a href="/lifecycle" class="side-link">See the full lifecycle →</a>
+        </div>
+      </aside>
+    </div>
+
+    {related.length > 0 && (
+      <div class="container detail-related">
+        <hr class="hairline" />
+        <h2 class="related-title">More in the {phase.label} phase</h2>
+        <div class="related-grid">
+          {related.map((s) => <SkillCard skill={s} />)}
+        </div>
+      </div>
+    )}
+  </article>
+</Base>
+
+<style>
+  .detail {
+    position: relative;
+  }
+  .detail-grid-bg {
+    height: 380px;
+    inset: 0 0 auto 0;
+    opacity: 0.7;
+  }
+  .detail-head {
+    position: relative;
+    padding-block: 40px 40px;
+    max-width: 820px;
+  }
+  .crumbs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+    margin-bottom: 26px;
+  }
+  .crumbs a:hover {
+    color: var(--fg-bright);
+  }
+  .crumb-phase {
+    color: hsl(var(--h) 55% 72%);
+  }
+  .detail-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .detail-cmd-badge {
+    font-size: 12px;
+    color: var(--fg-dim);
+    padding: 3px 9px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+  }
+  .detail-name {
+    font-size: clamp(1.8rem, 4.5vw, 2.7rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg-bright);
+    word-break: break-word;
+  }
+  .detail-summary {
+    margin-top: 18px;
+    font-size: clamp(1.02rem, 1.7vw, 1.18rem);
+    line-height: 1.6;
+    color: var(--fg-muted);
+  }
+  .detail-when {
+    margin-top: 22px;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    padding: 14px 16px;
+    background: hsl(var(--h) 40% 50% / 0.06);
+    border: 1px solid hsl(var(--h) 40% 50% / 0.2);
+    border-radius: var(--r-md);
+    font-size: 0.95rem;
+    color: var(--fg);
+  }
+  .detail-when-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: hsl(var(--h) 50% 70%);
+    flex: none;
+  }
+  .detail-tags {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .detail-body {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+    padding-block: 24px 40px;
+    align-items: start;
+  }
+  .detail-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+  .panel {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .panel-title {
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+  }
+  .panel-lede {
+    margin-top: 8px;
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .panel-lede a {
+    color: var(--accent);
+  }
+  .panel-lede a:hover {
+    text-decoration: underline;
+  }
+  .panel-cmds {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .anatomy {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  .anatomy-row {
+    display: grid;
+    grid-template-columns: 40px 150px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .anatomy-row:last-child {
+    border-bottom: 0;
+  }
+  .anatomy-num {
+    color: var(--fg-faint);
+    font-size: 0.8rem;
+  }
+  .anatomy-k {
+    color: var(--fg-bright);
+    font-weight: 500;
+  }
+  .anatomy-v {
+    color: var(--fg-dim);
+  }
+  .panel-btn {
+    margin-top: 22px;
+  }
+
+  .detail-side {
+    position: sticky;
+    top: calc(var(--nav-h) + 24px);
+  }
+  .side-card {
+    padding: 22px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .side-title {
+    font-size: 1rem;
+  }
+  .side-blurb {
+    margin-top: 8px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .side-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--fg-dim);
+  }
+  .side-row code {
+    color: var(--accent);
+  }
+  .side-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 0.86rem;
+    color: var(--fg-muted);
+  }
+  .side-link:hover {
+    color: var(--fg-bright);
+  }
+
+  .detail-related {
+    padding-block: 24px 88px;
+  }
+  .related-title {
+    font-size: 1.3rem;
+    margin-block: 40px 24px;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .detail-body {
+      grid-template-columns: 1fr;
+    }
+    .detail-side {
+      position: static;
+    }
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .anatomy-row {
+      grid-template-columns: 32px 1fr;
+    }
+    .anatomy-v {
+      grid-column: 2;
+    }
+  }
+</style>

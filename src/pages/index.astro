@@ -1,0 +1,656 @@
+---
+import Base from '../layouts/Base.astro';
+import CopyCommand from '../components/CopyCommand.astro';
+import Lifecycle from '../components/Lifecycle.astro';
+import SkillCard from '../components/SkillCard.astro';
+import { featuredSkills, totalSkills, INSTALL_CMD, REPO_URL } from '../data/skills';
+import { commands, personas } from '../data/agents';
+
+const compatible = [
+  'Claude Code', 'Cursor', 'Codex', 'Gemini CLI', 'Copilot',
+  'Windsurf', 'Cline', 'Antigravity', 'OpenCode', 'Kiro',
+];
+
+const pillars = [
+  {
+    tag: 'Anti-rationalization',
+    title: 'Agents stop talking their way out of the work',
+    body: 'Every skill ships a table of the exact excuses an agent makes to skip a step — “I’ll add tests later,” “this is too simple to spec” — each one rebutted inline. The shortcut is closed before it’s taken.',
+    icon: 'shield',
+  },
+  {
+    tag: 'Verification gates',
+    title: 'Evidence, not “seems right”',
+    body: 'Each skill ends with exit criteria: tests passing, build output, real runtime data. Nothing is “done” on vibes. Verification is the whole point, not a nicety bolted on at the end.',
+    icon: 'check',
+  },
+  {
+    tag: 'Parallel personas',
+    title: 'A review panel on every ship',
+    body: '/ship fans out to a code-reviewer, security-auditor, test-engineer and web-performance-auditor in parallel, then merges their findings into a single go / no-go decision.',
+    icon: 'users',
+  },
+  {
+    tag: 'In-repo evals',
+    title: 'The skills are measured, not asserted',
+    body: 'A three-tier eval framework checks structure, routing (no two skills collide on the words users say), and real execution traces — some of it in CI. The catalog is held to its own standard.',
+    icon: 'gauge',
+  },
+];
+
+function iconSvg(name: string): string {
+  const icons: Record<string, string> = {
+    shield:
+      '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M10 2.5 4 4.7v4.6c0 3.6 2.5 6 6 7.2 3.5-1.2 6-3.6 6-7.2V4.7L10 2.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="m7.5 9.8 1.8 1.8 3.2-3.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    check:
+      '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><circle cx="10" cy="10" r="7.2" stroke="currentColor" stroke-width="1.3"/><path d="m6.8 10.2 2.1 2.1 4.3-4.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    users:
+      '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><circle cx="7.5" cy="7" r="2.6" stroke="currentColor" stroke-width="1.3"/><path d="M3 16c0-2.5 2-4.2 4.5-4.2S12 13.5 12 16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M13 5.2A2.4 2.4 0 0 1 14 9.9M14.5 11.9c1.8.3 3 1.7 3 3.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+    gauge:
+      '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M3.5 14.5a7.5 7.5 0 1 1 13 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="m10 10 3.4-2.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="10" cy="10.4" r="1.1" fill="currentColor"/></svg>',
+  };
+  return icons[name] ?? '';
+}
+---
+
+<Base>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <a href={REPO_URL} target="_blank" rel="noopener" class="hero-badge">
+        <span class="dot"></span>
+        <span>Trending on GitHub</span>
+        <span class="hero-badge-sep">·</span>
+        <span class="text-muted">{totalSkills} skills, MIT licensed</span>
+        <svg viewBox="0 0 16 16" width="13" height="13" fill="none"><path d="M5 3.5h7.5V11M12.5 3.5 3.5 12.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <h1 class="hero-title">
+        Production-grade skills<br />
+        for AI coding agents.
+      </h1>
+
+      <p class="hero-sub">
+        Encode the workflows, quality gates, and judgment senior engineers bring to
+        production — packaged so your agent follows them consistently across every
+        phase, from first idea to live deploy.
+      </p>
+
+      <div class="hero-cmd">
+        <CopyCommand command={INSTALL_CMD} size="lg" />
+      </div>
+
+      <div class="hero-cta">
+        <a href="/docs/getting-started" class="btn btn-primary">
+          Get started
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/skills" class="btn btn-secondary">Browse the {totalSkills} skills</a>
+      </div>
+
+      <div class="hero-compat">
+        <span class="hero-compat-label">Works with 70+ agents</span>
+        <div class="hero-compat-list">
+          {compatible.map((c) => <span class="hero-compat-item">{c}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIFECYCLE ============ -->
+  <section class="section lifecycle-section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow"><span class="eyebrow-num">01</span> The lifecycle</span>
+        <h2 class="section-title">One command per phase. Skills load automatically.</h2>
+        <p class="section-lede">
+          Eight slash commands map to the way software actually gets built. Each one
+          activates the right skills for the moment — designing an API pulls in
+          contract-first design, building UI pulls in accessibility, and so on.
+        </p>
+      </div>
+
+      <div class="lifecycle-wrap reveal">
+        <Lifecycle />
+      </div>
+
+      <div class="cmd-table reveal">
+        {commands.map((c) => (
+          <a href="/lifecycle" class="cmd-row">
+            <code class="cmd-row-cmd">{c.cmd}</code>
+            <span class="cmd-row-doing">{c.doing}</span>
+            <span class="cmd-row-principle">{c.principle}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- ============ SKILLS PREVIEW ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head sec-head-row reveal">
+        <div>
+          <span class="eyebrow"><span class="eyebrow-num">02</span> The catalog</span>
+          <h2 class="section-title">{totalSkills} skills spanning the whole SDLC</h2>
+          <p class="section-lede">
+            Not prompts — structured workflows with steps, checkpoints, and exit
+            criteria. Reach for one directly, or let the meta-skill route you.
+          </p>
+        </div>
+        <a href="/skills" class="btn btn-secondary sec-head-cta">
+          View all skills
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="skills-grid reveal">
+        {featuredSkills.map((s) => <SkillCard skill={s} />)}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- ============ WHY / PILLARS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow"><span class="eyebrow-num">03</span> Why it works</span>
+        <h2 class="section-title">AI agents default to the shortest path.<br />These skills close the shortcut.</h2>
+        <p class="section-lede">
+          Left alone, agents skip specs, tests, and reviews — the practices that make
+          software reliable. Four mechanisms hold the line.
+        </p>
+      </div>
+
+      <div class="pillars reveal">
+        {pillars.map((p) => (
+          <article class="card pillar">
+            <div class="pillar-icon" set:html={iconSvg(p.icon)} />
+            <span class="pillar-tag mono">{p.tag}</span>
+            <h3 class="pillar-title">{p.title}</h3>
+            <p class="pillar-body">{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- ============ PERSONAS / SHIP ============ -->
+  <section class="section personas-section">
+    <div class="container">
+      <div class="personas-layout">
+        <div class="personas-copy reveal">
+          <span class="eyebrow"><span class="eyebrow-num">04</span> Specialist review</span>
+          <h2 class="section-title">Ship past a panel, not a rubber stamp</h2>
+          <p class="section-lede">
+            <code class="inline-cmd">/ship</code> runs a pre-launch checklist and fans
+            out to four specialist personas in parallel. Each brings a different
+            perspective; their findings merge into one honest go / no-go.
+          </p>
+          <a href="/skills/shipping-and-launch" class="btn btn-secondary personas-cta">
+            See the /ship flow
+            <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="personas-grid reveal">
+          {personas.map((p, i) => (
+            <div class="card persona-card" style={`--i:${i}`}>
+              <div class="persona-head">
+                <span class="persona-avatar" aria-hidden="true">{p.role.split(' ').map((w) => w[0]).slice(0, 2).join('')}</span>
+                <div>
+                  <h3 class="persona-name mono">{p.name}</h3>
+                  <span class="persona-role">{p.role}</span>
+                </div>
+              </div>
+              <p class="persona-persp">{p.perspective}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- ============ COMPARE TEASER ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="compare-teaser card reveal">
+        <div class="grid-bg compare-grid"></div>
+        <div class="compare-teaser-inner">
+          <span class="eyebrow"><span class="eyebrow-num">05</span> Honest positioning</span>
+          <h2 class="section-title">How does it compare to Superpowers or Matt Pocock’s skills?</h2>
+          <p class="section-lede">
+            All three are good and share DNA. agent-skills organizes the whole lifecycle
+            with review personas, anti-rationalization guards, and an in-repo eval
+            framework. We wrote an honest, side-by-side map — including a controlled
+            head-to-head experiment.
+          </p>
+          <a href="/compare" class="btn btn-primary">
+            Read the comparison
+            <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section final-cta">
+    <div class="hero-glow final-glow" aria-hidden="true"></div>
+    <div class="container final-inner reveal">
+      <h2 class="final-title">Give your agent a senior engineer’s instincts.</h2>
+      <p class="final-sub">One command installs all {totalSkills} skills into 70+ agents.</p>
+      <div class="final-cmd">
+        <CopyCommand command={INSTALL_CMD} size="lg" />
+      </div>
+      <div class="final-links">
+        <a href="/docs/getting-started" class="btn btn-primary">Get started</a>
+        <a href={REPO_URL} target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding-top: clamp(64px, 11vw, 128px);
+    padding-bottom: clamp(56px, 8vw, 96px);
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    top: -180px;
+    left: 50%;
+    width: 900px;
+    height: 560px;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(82, 168, 255, 0.14),
+      transparent 70%
+    );
+    filter: blur(20px);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding-inline: 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .hero-badge:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-2);
+  }
+  .hero-badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+  }
+  .hero-badge-sep {
+    color: var(--fg-faint);
+  }
+  .hero-badge svg {
+    color: var(--fg-faint);
+  }
+  .hero-title {
+    margin-top: 26px;
+    font-size: clamp(2.4rem, 6.4vw, 4.4rem);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    background: linear-gradient(180deg, #fff 30%, #b9b9b9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-sub {
+    margin-top: 22px;
+    max-width: 620px;
+    font-size: clamp(1.02rem, 1.9vw, 1.22rem);
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+  .hero-cmd {
+    margin-top: 34px;
+    width: 100%;
+    max-width: 460px;
+  }
+  .hero-cta {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-compat {
+    margin-top: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-compat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+  .hero-compat-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    max-width: 720px;
+  }
+  .hero-compat-item {
+    color: var(--fg-dim);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .hero-compat-item:hover {
+    color: var(--fg);
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .sec-head {
+    max-width: 760px;
+    margin-bottom: 48px;
+  }
+  .sec-head .section-title {
+    margin-top: 18px;
+  }
+  .eyebrow-num {
+    color: var(--fg-faint);
+  }
+  .sec-head-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: none;
+  }
+  .sec-head-cta {
+    flex: none;
+  }
+
+  /* ---------- LIFECYCLE ---------- */
+  .lifecycle-wrap {
+    margin-bottom: 48px;
+    padding: 40px 24px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+  }
+  .cmd-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .cmd-row {
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--bg);
+    transition: background 0.15s;
+  }
+  .cmd-row:hover {
+    background: var(--surface-2);
+  }
+  .cmd-row-cmd {
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    color: var(--accent);
+  }
+  .cmd-row-doing {
+    color: var(--fg);
+    font-size: 0.9rem;
+  }
+  .cmd-row-principle {
+    color: var(--fg-faint);
+    font-size: 0.8rem;
+    text-align: right;
+  }
+
+  /* ---------- SKILLS GRID ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ---------- PILLARS ---------- */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .pillar {
+    padding: 28px;
+  }
+  .pillar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--r-md);
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    margin-bottom: 20px;
+  }
+  .pillar-tag {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pillar-title {
+    margin-top: 10px;
+    font-size: 1.24rem;
+    letter-spacing: -0.02em;
+  }
+  .pillar-body {
+    margin-top: 12px;
+    color: var(--fg-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- PERSONAS ---------- */
+  .personas-layout {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .inline-cmd {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    background: var(--surface-2);
+    padding: 1px 7px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    font-size: 0.9em;
+  }
+  .personas-cta {
+    margin-top: 28px;
+  }
+  .personas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .persona-card {
+    padding: 20px;
+  }
+  .persona-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .persona-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, var(--surface-3), var(--surface));
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--fg-bright);
+  }
+  .persona-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--fg-bright);
+  }
+  .persona-role {
+    font-size: 0.78rem;
+    color: var(--fg-dim);
+  }
+  .persona-persp {
+    margin-top: 14px;
+    color: var(--fg-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  /* ---------- COMPARE ---------- */
+  .compare-teaser {
+    position: relative;
+    padding: clamp(32px, 5vw, 56px);
+    overflow: hidden;
+    background: var(--bg-subtle);
+  }
+  .compare-grid {
+    mask-image: radial-gradient(ellipse 70% 90% at 90% 10%, #000, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 90% at 90% 10%, #000, transparent 70%);
+    opacity: 0.6;
+  }
+  .compare-teaser-inner {
+    position: relative;
+    max-width: 640px;
+  }
+  .compare-teaser .btn {
+    margin-top: 28px;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+  .final-glow {
+    top: auto;
+    bottom: -260px;
+    opacity: 0.8;
+  }
+  .final-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .final-title {
+    font-size: clamp(1.9rem, 4.4vw, 3rem);
+    letter-spacing: -0.03em;
+    max-width: 640px;
+  }
+  .final-sub {
+    margin-top: 16px;
+    color: var(--fg-muted);
+    font-size: 1.08rem;
+  }
+  .final-cmd {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 460px;
+  }
+  .final-links {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .personas-layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .pillars {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 860px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .cmd-table {
+      grid-template-columns: 1fr;
+    }
+    .sec-head-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  @media (max-width: 560px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    .cmd-row {
+      grid-template-columns: 96px 1fr;
+    }
+    .cmd-row-principle {
+      display: none;
+    }
+    .personas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
