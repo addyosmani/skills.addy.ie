@@ -220,29 +220,6 @@ function iconSvg(name: string): string {
 
   <hr class="hairline" />
 
-  <!-- ============ COMPARE TEASER ============ -->
-  <section class="section">
-    <div class="container">
-      <div class="compare-teaser card reveal">
-        <div class="grid-bg compare-grid"></div>
-        <div class="compare-teaser-inner">
-          <span class="eyebrow"><span class="eyebrow-num">05</span> Honest positioning</span>
-          <h2 class="section-title">How does it compare to Superpowers or Matt Pocock’s skills?</h2>
-          <p class="section-lede">
-            All three are good and share DNA. agent-skills organizes the whole lifecycle
-            with review personas, anti-rationalization guards, and an in-repo eval
-            framework. We wrote an honest, side-by-side map - including a controlled
-            head-to-head experiment.
-          </p>
-          <a href="/compare" class="btn btn-primary">
-            Read the comparison
-            <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ FINAL CTA ============ -->
   <section class="section final-cta">
     <div class="hero-glow final-glow" aria-hidden="true"></div>
@@ -555,26 +532,6 @@ function iconSvg(name: string): string {
     color: var(--fg-muted);
     font-size: 0.86rem;
     line-height: 1.55;
-  }
-
-  /* ---------- COMPARE ---------- */
-  .compare-teaser {
-    position: relative;
-    padding: clamp(32px, 5vw, 56px);
-    overflow: hidden;
-    background: var(--bg-subtle);
-  }
-  .compare-grid {
-    mask-image: radial-gradient(ellipse 70% 90% at 90% 10%, #000, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 90% at 90% 10%, #000, transparent 70%);
-    opacity: 0.6;
-  }
-  .compare-teaser-inner {
-    position: relative;
-    max-width: 640px;
-  }
-  .compare-teaser .btn {
-    margin-top: 28px;
   }
 
   /* ---------- FINAL CTA ---------- */
