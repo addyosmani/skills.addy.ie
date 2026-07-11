@@ -1,0 +1,93 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#52a8ff"/><stop offset="0.2" stop-color="#8b7dff"/>
+      <stop offset="0.4" stop-color="#3ed6c5"/><stop offset="0.6" stop-color="#f5b13a"/>
+      <stop offset="0.8" stop-color="#f56ba0"/><stop offset="1" stop-color="#4fd873"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+
+  <!-- header -->
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">The software lifecycle, one command per phase</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">Skills load automatically for each phase. A human checkpoint stays at every step.</text>
+
+  <!-- flow line -->
+  <line x1="120" y1="360" x2="1160" y2="360" stroke="url(#flow)" stroke-width="2.5" opacity="0.7"/>
+
+  <!-- phases -->
+  <g font-family="Geist, Arial, sans-serif">
+    <!-- DEFINE -->
+    <g transform="translate(64,290)">
+      <circle cx="56" cy="70" r="9" fill="#52a8ff"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#52a8ff">DEFINE</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Idea</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Spec / PRD</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/spec</text>
+    </g>
+    <!-- PLAN -->
+    <g transform="translate(240,290)">
+      <circle cx="56" cy="70" r="9" fill="#8b7dff"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#8b7dff">PLAN</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#8b7dff" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Tasks</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Small, ordered</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/plan</text>
+    </g>
+    <!-- BUILD -->
+    <g transform="translate(416,290)">
+      <circle cx="56" cy="70" r="9" fill="#3ed6c5"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#3ed6c5">BUILD</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Code</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Thin slices</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/build</text>
+    </g>
+    <!-- VERIFY -->
+    <g transform="translate(592,290)">
+      <circle cx="56" cy="70" r="9" fill="#f5b13a"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#f5b13a">VERIFY</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Test</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Prove it works</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/test</text>
+    </g>
+    <!-- REVIEW -->
+    <g transform="translate(768,290)">
+      <circle cx="56" cy="70" r="9" fill="#f56ba0"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#f56ba0">REVIEW</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Gate</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Quality axes</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/review</text>
+    </g>
+    <!-- SHIP -->
+    <g transform="translate(944,290)">
+      <circle cx="56" cy="70" r="9" fill="#4fd873"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#4fd873">SHIP</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#4fd873" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Go live</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Roll out safely</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/ship</text>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <line x1="64" y1="600" x2="1216" y2="600" stroke="#1f1f1f"/>
+  <text x="64" y="646" font-family="'Geist Mono',monospace" font-size="17" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="646" text-anchor="end" font-family="'Geist Mono',monospace" font-size="17" fill="#a1a1a1">npx skills add addyosmani/agent-skills</text>
+</svg>

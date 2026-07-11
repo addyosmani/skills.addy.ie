@@ -1,0 +1,268 @@
+[
+  {
+    "id": "101",
+    "slug": "agent-skills-101",
+    "level": "101",
+    "title": "agent-skills 101",
+    "subtitle": "Production-grade skills for AI coding agents",
+    "accent": "#52a8ff",
+    "slides": [
+      {
+        "type": "title",
+        "kicker": "THE 101",
+        "title": "agent-skills",
+        "subtitle": "Production-grade engineering skills for AI coding agents",
+        "foot": "What they are, and why they matter."
+      },
+      {
+        "type": "statement",
+        "kicker": "THE PROBLEM",
+        "text": "AI coding agents default to the shortest path.",
+        "sub": "That usually means skipping specs, tests, and reviews. The practices that make software reliable are the first to go."
+      },
+      {
+        "type": "bullets",
+        "kicker": "THE IDEA",
+        "heading": "A skill is a workflow, not a prompt",
+        "bullets": [
+          "Structured steps the agent follows, with checkpoints and exit criteria",
+          "An anti-rationalization table that rebuts the excuses to skip a step",
+          "Red flags that signal the process is being violated",
+          "Verification that demands evidence: tests, build output, runtime data"
+        ]
+      },
+      {
+        "type": "diagram",
+        "kicker": "ANATOMY",
+        "heading": "Every skill has the same shape",
+        "image": "https://skills.addy.ie/teach/diagrams/skill-anatomy.svg",
+        "caption": "Frontmatter routes the work. The body is a process. Guardrails and proof are built in."
+      },
+      {
+        "type": "diagram",
+        "kicker": "THE LIFECYCLE",
+        "heading": "One command per phase, Define to Ship",
+        "image": "https://skills.addy.ie/teach/diagrams/lifecycle.svg",
+        "caption": "24 skills spanning the whole SDLC. The right ones load automatically for each phase."
+      },
+      {
+        "type": "code",
+        "kicker": "GET STARTED",
+        "heading": "Install into 70+ agents in one command",
+        "code": "npx skills add addyosmani/agent-skills",
+        "sub": "Works with Claude Code, Codex, Cursor, Copilot, and more. Or add a single skill with --skill."
+      },
+      {
+        "type": "bullets",
+        "kicker": "YOUR FIRST WIN",
+        "heading": "Start with a spec, then build",
+        "bullets": [
+          "Run /spec to write a short PRD before any code",
+          "Run /build to implement in thin, tested slices",
+          "Every slice is committed and verified individually",
+          "You approve at each checkpoint. Nothing ships on vibes."
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Give your agent a senior engineer’s instincts",
+        "code": "npx skills add addyosmani/agent-skills",
+        "links": [
+          "skills.addy.ie",
+          "github.com/addyosmani/agent-skills"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "201",
+    "slug": "agent-skills-201",
+    "level": "201",
+    "title": "agent-skills 201",
+    "subtitle": "The software lifecycle, in practice",
+    "accent": "#3ed6c5",
+    "slides": [
+      {
+        "type": "title",
+        "kicker": "THE 201",
+        "title": "The SDLC, in practice",
+        "subtitle": "How you actually drive a feature from idea to production",
+        "foot": "Eight commands, six phases, one checkpoint at each step."
+      },
+      {
+        "type": "commands",
+        "kicker": "THE COMMANDS",
+        "heading": "Eight commands map to the lifecycle",
+        "rows": [
+          [
+            "/spec",
+            "Define what to build",
+            "Spec before code"
+          ],
+          [
+            "/plan",
+            "Break it into tasks",
+            "Small, atomic tasks"
+          ],
+          [
+            "/build",
+            "Implement incrementally",
+            "One slice at a time"
+          ],
+          [
+            "/test",
+            "Prove it works",
+            "Tests are proof"
+          ],
+          [
+            "/review",
+            "Review before merge",
+            "Improve code health"
+          ],
+          [
+            "/webperf",
+            "Audit performance",
+            "Measure, then optimize"
+          ],
+          [
+            "/code-simplify",
+            "Simplify",
+            "Clarity over cleverness"
+          ],
+          [
+            "/ship",
+            "Deploy",
+            "Faster is safer"
+          ]
+        ]
+      },
+      {
+        "type": "diagram",
+        "kicker": "SOLO PROJECTS",
+        "heading": "The daily loop",
+        "image": "https://skills.addy.ie/teach/diagrams/solo-workflow.svg",
+        "caption": "Install once. Drive each phase with a command. Repeat per feature."
+      },
+      {
+        "type": "bullets",
+        "kicker": "DEFINE + PLAN",
+        "heading": "Get the intent right before writing code",
+        "bullets": [
+          "interview-me extracts what you actually want, one question at a time",
+          "spec-driven-development writes objectives, structure, tests, and boundaries",
+          "planning-and-task-breakdown turns the spec into small, ordered, verifiable tasks"
+        ]
+      },
+      {
+        "type": "bullets",
+        "kicker": "BUILD + VERIFY",
+        "heading": "Write it in slices, prove each one",
+        "bullets": [
+          "incremental-implementation lands thin vertical slices, rollback-friendly",
+          "test-driven-development enforces red, green, refactor with a real test pyramid",
+          "Anti-rationalization tables stop \"I will add tests later\" before it happens",
+          "debugging-and-error-recovery finds the root cause instead of guessing"
+        ]
+      },
+      {
+        "type": "bullets",
+        "kicker": "REVIEW + SHIP",
+        "heading": "Gate on quality, then roll out",
+        "bullets": [
+          "code-review-and-quality runs a five-axis review with severity labels",
+          "security-and-hardening applies OWASP Top 10 prevention and boundary checks",
+          "shipping-and-launch handles staged rollouts, monitoring, and rollback"
+        ]
+      },
+      {
+        "type": "code",
+        "kicker": "HANDS-OFF",
+        "heading": "Approve the plan once, let it run",
+        "code": "/build auto",
+        "sub": "Generates the plan and implements every task in one approved pass. Still test-driven, still committed per task, still pauses on failures."
+      },
+      {
+        "type": "cta",
+        "title": "Drive the whole lifecycle with a checkpoint at each phase",
+        "code": "npx skills add addyosmani/agent-skills",
+        "links": [
+          "skills.addy.ie/lifecycle",
+          "github.com/addyosmani/agent-skills"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301",
+    "slug": "agent-skills-301",
+    "level": "301",
+    "title": "agent-skills 301",
+    "subtitle": "Teams and customization",
+    "accent": "#f56ba0",
+    "slides": [
+      {
+        "type": "title",
+        "kicker": "THE 301",
+        "title": "Teams and customization",
+        "subtitle": "Scale the discipline across a team, and bend it to your stack",
+        "foot": "Review panels, context budgets, custom skills, and evals."
+      },
+      {
+        "type": "diagram",
+        "kicker": "TEAM PROJECTS",
+        "heading": "Ship past a panel, not a rubber stamp",
+        "image": "https://skills.addy.ie/teach/diagrams/team-workflow.svg",
+        "caption": "/ship fans out to four specialist personas in parallel, then merges one go / no-go."
+      },
+      {
+        "type": "diagram",
+        "kicker": "CUSTOMIZE",
+        "heading": "Four ways to make it yours",
+        "image": "https://skills.addy.ie/teach/diagrams/customize.svg",
+        "caption": "Install all, pick a few, edit them, or write your own. Skills are plain Markdown."
+      },
+      {
+        "type": "bullets",
+        "kicker": "CONTEXT ENGINEERING",
+        "heading": "Load only what the task needs",
+        "bullets": [
+          "More context is not better. Context is a budget you spend deliberately.",
+          "context-engineering configures rules files and packs the right information",
+          "Working on UI? Load frontend-ui-engineering. Debugging? Load the debugging skill.",
+          "The using-agent-skills meta-skill routes each task to the right workflow"
+        ]
+      },
+      {
+        "type": "bullets",
+        "kicker": "MEASURE IT",
+        "heading": "The skills are measured, not asserted",
+        "bullets": [
+          "A three-tier eval framework lives in the repo",
+          "Tier 1 checks structure. Tier 2 checks routing so no two skills collide.",
+          "Tier 3 grades a real execution trace against per-skill expectations",
+          "Some of it runs in CI, so regressions are caught early"
+        ]
+      },
+      {
+        "type": "bullets",
+        "kicker": "ROLL OUT",
+        "heading": "One source of truth for the whole team",
+        "bullets": [
+          "Commit your edited skills to version control",
+          "Every engineer and their agent share the same conventions",
+          "Spec and task artifacts are living documents during the work",
+          "New team members inherit the standards on day one"
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Encode your team’s standards once. Every agent follows them.",
+        "code": "npx skills add addyosmani/agent-skills",
+        "links": [
+          "skills.addy.ie/teach",
+          "github.com/addyosmani/agent-skills"
+        ]
+      }
+    ]
+  }
+]

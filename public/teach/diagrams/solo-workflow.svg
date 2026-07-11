@@ -1,0 +1,65 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0l6 3-6 3" fill="none" stroke="#565656" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Solo projects: your daily loop</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">Install once. Drive each phase with a command. You approve at every checkpoint.</text>
+
+  <!-- steps -->
+  <g>
+    <g transform="translate(80,280)">
+      <rect width="240" height="130" rx="14" fill="#0e0e0e" stroke="#2e2e2e"/>
+      <circle cx="30" cy="34" r="6" fill="#52a8ff"/>
+      <text x="52" y="40" font-family="'Geist Mono',monospace" font-size="18" fill="#52a8ff">/spec</text>
+      <text x="26" y="78" font-size="17" fill="#ededed">Write a short PRD</text>
+      <text x="26" y="104" font-size="15" fill="#7d7d7d">before any code</text>
+    </g>
+    <line x1="330" y1="345" x2="378" y2="345" stroke="#565656" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g transform="translate(388,280)">
+      <rect width="240" height="130" rx="14" fill="#0e0e0e" stroke="#2e2e2e"/>
+      <circle cx="30" cy="34" r="6" fill="#3ed6c5"/>
+      <text x="52" y="40" font-family="'Geist Mono',monospace" font-size="18" fill="#3ed6c5">/build</text>
+      <text x="26" y="78" font-size="17" fill="#ededed">Thin slices,</text>
+      <text x="26" y="104" font-size="15" fill="#7d7d7d">each tested + committed</text>
+    </g>
+    <line x1="638" y1="345" x2="686" y2="345" stroke="#565656" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g transform="translate(696,280)">
+      <rect width="240" height="130" rx="14" fill="#0e0e0e" stroke="#2e2e2e"/>
+      <circle cx="30" cy="34" r="6" fill="#f5b13a"/>
+      <text x="52" y="40" font-family="'Geist Mono',monospace" font-size="18" fill="#f5b13a">/test</text>
+      <text x="26" y="78" font-size="17" fill="#ededed">Prove it works</text>
+      <text x="26" y="104" font-size="15" fill="#7d7d7d">red, green, refactor</text>
+    </g>
+    <line x1="946" y1="345" x2="994" y2="345" stroke="#565656" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g transform="translate(1004,280)">
+      <rect width="196" height="130" rx="14" fill="#0e0e0e" stroke="#4fd873" stroke-opacity="0.5"/>
+      <circle cx="30" cy="34" r="6" fill="#4fd873"/>
+      <text x="52" y="40" font-family="'Geist Mono',monospace" font-size="18" fill="#4fd873">/ship</text>
+      <text x="26" y="78" font-size="17" fill="#ededed">Go live with</text>
+      <text x="26" y="104" font-size="15" fill="#7d7d7d">a go / no-go</text>
+    </g>
+  </g>
+
+  <!-- loop back -->
+  <path d="M1102 410 v60 H140 v-60" fill="none" stroke="#2e2e2e" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+  <text x="620" y="493" text-anchor="middle" font-size="15" fill="#7d7d7d">repeat per feature</text>
+
+  <!-- hands-off callout -->
+  <g transform="translate(80,540)">
+    <rect width="1120" height="70" rx="12" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.35"/>
+    <text x="26" y="34" font-size="17" font-weight="600" fill="#fff">Hands-off option</text>
+    <text x="26" y="56" font-size="15.5" fill="#a1a1a1"><tspan font-family="'Geist Mono',monospace" fill="#52a8ff">/build auto</tspan> generates the plan and implements every task in one approved pass. Still test-driven, still committed per task.</text>
+  </g>
+
+  <text x="64" y="676" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="676" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">npx skills add addyosmani/agent-skills</text>
+</svg>

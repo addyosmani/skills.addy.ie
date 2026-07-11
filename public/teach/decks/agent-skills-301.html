@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>agent-skills 301 - Teams and customization</title>
+<meta name="description" content="Teams and customization. A shareable deck from skills.addy.ie."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --accent:#f56ba0;
+    --bg:#000;--surface:#0e0e0e;--border:#2e2e2e;--hair:#1f1f1f;
+    --fg:#ededed;--bright:#fff;--muted:#a1a1a1;--dim:#7d7d7d;--faint:#565656;
+    --sans:'Geist','Segoe UI',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:#050505;color:var(--fg);font-family:var(--sans);overflow:hidden}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;padding:3vmin}
+  .slide{
+    position:relative;display:none;flex-direction:column;justify-content:center;
+    width:min(100%,177.7vh);aspect-ratio:16/9;max-height:100%;
+    background:radial-gradient(120% 100% at 50% 0%,#0b0d10,#000 70%);
+    border:1px solid var(--hair);border-radius:16px;overflow:hidden;
+    padding:7% 8%;
+  }
+  .slide.active{display:flex}
+  .slide::before{content:'';position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask:radial-gradient(90% 70% at 50% 0%,#000,transparent);mask:radial-gradient(90% 70% at 50% 0%,#000,transparent);pointer-events:none}
+  .s{position:relative;z-index:1}
+  .kicker{font-family:var(--mono);font-size:1.5vh;letter-spacing:.28em;color:var(--accent);text-transform:uppercase}
+  h1{font-size:8.4vh;font-weight:700;letter-spacing:-.03em;line-height:1.02;margin-top:2.4vh;
+     background:linear-gradient(180deg,#fff,#bcbcbc);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:5.2vh;font-weight:600;letter-spacing:-.02em;line-height:1.08;margin-top:2vh;color:var(--bright)}
+  h2.big{font-size:6.6vh;max-width:15ch}
+  .sub{margin-top:2.4vh;font-size:2.7vh;line-height:1.5;color:var(--muted);max-width:40ch}
+  .foot-note{margin-top:5vh;font-size:2vh;color:var(--dim)}
+  .s-bullets ul{margin-top:3.6vh;list-style:none;display:flex;flex-direction:column;gap:2.4vh}
+  .s-bullets li{position:relative;padding-left:4vh;font-size:3vh;line-height:1.35;color:var(--fg);max-width:44ch}
+  .s-bullets li::before{content:'';position:absolute;left:0;top:1.4vh;width:1.4vh;height:1.4vh;border-radius:3px;
+    background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .img-wrap{margin-top:3vh;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;max-height:62vh;display:flex}
+  .img-wrap img,.img-wrap svg{display:block;width:100%;height:auto;max-height:62vh}
+  .caption{margin-top:2.2vh;font-size:2.1vh;color:var(--dim);max-width:60ch}
+  .cmd{margin-top:3.4vh;display:inline-block;font-family:var(--mono);font-size:3vh;color:var(--fg);
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2.4vh 3vh}
+  .cmd .prompt{color:var(--accent);margin-right:1.2vh}
+  .s-commands table{margin-top:3.2vh;border-collapse:collapse;width:100%;font-size:2.5vh}
+  .s-commands td{padding:1.5vh 1vh;border-bottom:1px solid var(--hair);vertical-align:middle}
+  .s-commands .cmd-cell{font-family:var(--mono);color:var(--accent);width:26%}
+  .s-commands .dim{color:var(--faint);text-align:right;font-size:2.1vh}
+  .s-cta{text-align:center;align-items:center;display:flex;flex-direction:column}
+  .s-cta h2{font-size:5.6vh;max-width:20ch}
+  .s-cta .cmd{margin-top:4vh}
+  .links{margin-top:3.4vh;display:flex;gap:3vh;font-family:var(--mono);font-size:2vh;color:var(--dim);flex-wrap:wrap;justify-content:center}
+  .brand-foot{position:absolute;left:8%;right:8%;bottom:4.2%;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:1.7vh;color:var(--faint);z-index:1}
+  .bf-brand{color:var(--muted)}.bf-dim{color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;transition:width .25s ease;z-index:10}
+  .nav{position:fixed;bottom:14px;right:16px;display:flex;gap:8px;z-index:10}
+  .nav button{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:rgba(14,14,14,.8);
+    color:var(--muted);font-size:16px;cursor:pointer;backdrop-filter:blur(8px)}
+  .nav button:hover{color:#fff;border-color:#3a3a3a}
+  .hint{position:fixed;bottom:20px;left:16px;font-family:var(--mono);font-size:12px;color:var(--faint);z-index:10}
+  @media print{
+    @page{size:1280px 720px;margin:0}
+    body{overflow:visible}.stage{position:static;padding:0}
+    .progress,.nav,.hint{display:none}
+    .slide{display:flex!important;width:1280px;height:720px;aspect-ratio:auto;max-height:none;border-radius:0;page-break-after:always;border:0}
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="stage">
+    <section class="slide" data-i="0"><div class="s s-title">
+        <span class="kicker">THE 301</span>
+        <h1>Teams and customization</h1>
+        <p class="sub">Scale the discipline across a team, and bend it to your stack</p>
+        <p class="foot-note">Review panels, context budgets, custom skills, and evals.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">1 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="1"><div class="s s-diagram">
+        <span class="kicker">TEAM PROJECTS</span>
+        <h2>Ship past a panel, not a rubber stamp</h2>
+        <div class="img-wrap"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0l6 3-6 3" fill="none" stroke="#565656" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Team projects: review by a panel</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1"><tspan font-family="'Geist Mono',monospace" fill="#4fd873">/ship</tspan> fans out to specialist personas in parallel, then merges one go / no-go.</text>
+
+  <!-- change node -->
+  <g transform="translate(80,340)">
+    <rect width="210" height="120" rx="14" fill="#0e0e0e" stroke="#2e2e2e"/>
+    <text x="26" y="46" font-size="22" font-weight="600" fill="#fff">Your change</text>
+    <text x="26" y="76" font-size="15" fill="#7d7d7d">feature branch,</text>
+    <text x="26" y="98" font-size="15" fill="#7d7d7d">ready to merge</text>
+  </g>
+  <line x1="290" y1="400" x2="352" y2="400" stroke="#565656" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <g transform="translate(360,368)">
+    <rect width="118" height="64" rx="10" fill="#0e1a12" stroke="#4fd873" stroke-opacity="0.5"/>
+    <text x="59" y="32" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="20" fill="#4fd873">/ship</text>
+    <text x="59" y="52" text-anchor="middle" font-size="12" fill="#7d7d7d">fan out</text>
+  </g>
+
+  <!-- personas -->
+  <g font-size="15">
+    <g transform="translate(560,214)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#52a8ff"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">code-reviewer</text>
+      <text x="26" y="64" fill="#a1a1a1">Five-axis review, staff-engineer bar</text>
+    </g>
+    <g transform="translate(560,314)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#f5b13a"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">test-engineer</text>
+      <text x="26" y="64" fill="#a1a1a1">Coverage and the Prove-It pattern</text>
+    </g>
+    <g transform="translate(560,414)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#f56ba0"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">security-auditor</text>
+      <text x="26" y="64" fill="#a1a1a1">OWASP, threat modeling, secrets</text>
+    </g>
+    <g transform="translate(560,514)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#3ed6c5"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">web-performance-auditor</text>
+      <text x="26" y="64" fill="#a1a1a1">Core Web Vitals, metric honesty</text>
+    </g>
+  </g>
+
+  <!-- connectors from /ship to personas -->
+  <g fill="none" stroke="#2e2e2e" stroke-width="1.5">
+    <path d="M478 400 C 520 400, 520 257, 556 257" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 357, 556 357" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 457, 556 457" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 557, 556 557" marker-end="url(#arrow2)"/>
+  </g>
+
+  <!-- merge to decision -->
+  <g fill="none" stroke="#2e2e2e" stroke-width="1.5">
+    <path d="M850 257 C 900 257, 900 380, 946 380" marker-end="url(#arrow2)"/>
+    <path d="M850 357 C 900 357, 900 385, 946 385" marker-end="url(#arrow2)"/>
+    <path d="M850 457 C 900 457, 900 415, 946 415" marker-end="url(#arrow2)"/>
+    <path d="M850 557 C 900 557, 900 420, 946 420" marker-end="url(#arrow2)"/>
+  </g>
+  <g transform="translate(956,336)">
+    <rect width="230" height="128" rx="14" fill="#0e0e0e" stroke="#4fd873" stroke-opacity="0.5"/>
+    <text x="26" y="46" font-size="22" font-weight="600" fill="#fff">Go / no-go</text>
+    <text x="26" y="78" font-size="15" fill="#a1a1a1">One merged decision</text>
+    <text x="26" y="100" font-size="15" fill="#7d7d7d">with the blocking items</text>
+  </g>
+
+  <text x="64" y="676" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="676" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">npx skills add addyosmani/agent-skills</text>
+</svg>
+</div>
+        <p class="caption">/ship fans out to four specialist personas in parallel, then merges one go / no-go.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">2 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="2"><div class="s s-diagram">
+        <span class="kicker">CUSTOMIZE</span>
+        <h2>Four ways to make it yours</h2>
+        <div class="img-wrap"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0l6 3-6 3" fill="none" stroke="#565656" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Customize for your stack</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">Skills are plain Markdown. Install all, pick a few, edit them, or write your own.</text>
+
+  <!-- 4 lanes -->
+  <g>
+    <g transform="translate(80,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#52a8ff">1</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Install all</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">One command drops all</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">24 skills into 70+ agents.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#52a8ff">npx skills add ...</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for a fresh start</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">or trying it all out.</text>
+    </g>
+
+    <g transform="translate(360,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#3ed6c5">2</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Pick a few</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Load only what the task</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">needs. Context is a budget.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="11.5" fill="#3ed6c5">--skill test-driven-...</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best when you already</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">have conventions.</text>
+    </g>
+
+    <g transform="translate(640,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#f5b13a">3</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Edit them</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Fork a SKILL.md and add</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">your rules, stack, taste.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#f5b13a">edit skills/*/SKILL.md</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for team standards</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">and house style.</text>
+    </g>
+
+    <g transform="translate(920,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#f56ba0">4</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Write your own</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Same anatomy: process,</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">guardrails, verification.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#f56ba0">new SKILL.md</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for domain logic</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">unique to your product.</text>
+    </g>
+  </g>
+
+  <text x="64" y="656" font-size="16" fill="#7d7d7d">Commit the edited skills to version control so your whole team and their agents share one source of truth.</text>
+
+  <text x="64" y="694" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="694" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">MIT licensed</text>
+</svg>
+</div>
+        <p class="caption">Install all, pick a few, edit them, or write your own. Skills are plain Markdown.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">3 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="3"><div class="s s-bullets">
+        <span class="kicker">CONTEXT ENGINEERING</span>
+        <h2>Load only what the task needs</h2>
+        <ul><li>More context is not better. Context is a budget you spend deliberately.</li><li>context-engineering configures rules files and packs the right information</li><li>Working on UI? Load frontend-ui-engineering. Debugging? Load the debugging skill.</li><li>The using-agent-skills meta-skill routes each task to the right workflow</li></ul>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">4 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="4"><div class="s s-bullets">
+        <span class="kicker">MEASURE IT</span>
+        <h2>The skills are measured, not asserted</h2>
+        <ul><li>A three-tier eval framework lives in the repo</li><li>Tier 1 checks structure. Tier 2 checks routing so no two skills collide.</li><li>Tier 3 grades a real execution trace against per-skill expectations</li><li>Some of it runs in CI, so regressions are caught early</li></ul>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">5 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="5"><div class="s s-bullets">
+        <span class="kicker">ROLL OUT</span>
+        <h2>One source of truth for the whole team</h2>
+        <ul><li>Commit your edited skills to version control</li><li>Every engineer and their agent share the same conventions</li><li>Spec and task artifacts are living documents during the work</li><li>New team members inherit the standards on day one</li></ul>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">6 / 7</span>
+          </footer>
+        </section>
+<section class="slide" data-i="6"><div class="s s-cta">
+        <h2>Encode your team’s standards once. Every agent follows them.</h2>
+        <pre class="cmd"><span class="prompt">$</span> npx skills add addyosmani/agent-skills</pre>
+        <div class="links"><span>skills.addy.ie/teach</span><span>github.com/addyosmani/agent-skills</span></div>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 301</span>
+            <span class="bf-page">7 / 7</span>
+          </footer>
+        </section>
+  </div>
+  <div class="hint">← → to navigate · F fullscreen · P print / PDF</div>
+  <div class="nav">
+    <button id="prev" aria-label="Previous">‹</button>
+    <button id="next" aria-label="Next">›</button>
+  </div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const prog=document.getElementById('progress');
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    prog.style.width=((i+1)/slides.length*100)+'%';
+    location.hash=i+1;}
+  function next(){show(i+1)} function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
+    else if(e.key==='p'||e.key==='P'){window.print()}
+  });
+  addEventListener('click',e=>{if(e.target.closest('.nav')||e.target.closest('a'))return;
+    const x=e.clientX/innerWidth; if(x>0.6)next(); else if(x<0.4)prev();});
+  show(parseInt(location.hash.slice(1))-1||0);
+</script>
+</body>
+</html>

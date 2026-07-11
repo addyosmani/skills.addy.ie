@@ -1,0 +1,83 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0l6 3-6 3" fill="none" stroke="#565656" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Team projects: review by a panel</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1"><tspan font-family="'Geist Mono',monospace" fill="#4fd873">/ship</tspan> fans out to specialist personas in parallel, then merges one go / no-go.</text>
+
+  <!-- change node -->
+  <g transform="translate(80,340)">
+    <rect width="210" height="120" rx="14" fill="#0e0e0e" stroke="#2e2e2e"/>
+    <text x="26" y="46" font-size="22" font-weight="600" fill="#fff">Your change</text>
+    <text x="26" y="76" font-size="15" fill="#7d7d7d">feature branch,</text>
+    <text x="26" y="98" font-size="15" fill="#7d7d7d">ready to merge</text>
+  </g>
+  <line x1="290" y1="400" x2="352" y2="400" stroke="#565656" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <g transform="translate(360,368)">
+    <rect width="118" height="64" rx="10" fill="#0e1a12" stroke="#4fd873" stroke-opacity="0.5"/>
+    <text x="59" y="32" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="20" fill="#4fd873">/ship</text>
+    <text x="59" y="52" text-anchor="middle" font-size="12" fill="#7d7d7d">fan out</text>
+  </g>
+
+  <!-- personas -->
+  <g font-size="15">
+    <g transform="translate(560,214)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#52a8ff"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">code-reviewer</text>
+      <text x="26" y="64" fill="#a1a1a1">Five-axis review, staff-engineer bar</text>
+    </g>
+    <g transform="translate(560,314)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#f5b13a"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">test-engineer</text>
+      <text x="26" y="64" fill="#a1a1a1">Coverage and the Prove-It pattern</text>
+    </g>
+    <g transform="translate(560,414)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#f56ba0"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">security-auditor</text>
+      <text x="26" y="64" fill="#a1a1a1">OWASP, threat modeling, secrets</text>
+    </g>
+    <g transform="translate(560,514)">
+      <rect width="290" height="86" rx="12" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.35"/>
+      <circle cx="30" cy="30" r="7" fill="#3ed6c5"/>
+      <text x="52" y="35" font-family="'Geist Mono',monospace" font-size="15" fill="#fff">web-performance-auditor</text>
+      <text x="26" y="64" fill="#a1a1a1">Core Web Vitals, metric honesty</text>
+    </g>
+  </g>
+
+  <!-- connectors from /ship to personas -->
+  <g fill="none" stroke="#2e2e2e" stroke-width="1.5">
+    <path d="M478 400 C 520 400, 520 257, 556 257" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 357, 556 357" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 457, 556 457" marker-end="url(#arrow2)"/>
+    <path d="M478 400 C 520 400, 520 557, 556 557" marker-end="url(#arrow2)"/>
+  </g>
+
+  <!-- merge to decision -->
+  <g fill="none" stroke="#2e2e2e" stroke-width="1.5">
+    <path d="M850 257 C 900 257, 900 380, 946 380" marker-end="url(#arrow2)"/>
+    <path d="M850 357 C 900 357, 900 385, 946 385" marker-end="url(#arrow2)"/>
+    <path d="M850 457 C 900 457, 900 415, 946 415" marker-end="url(#arrow2)"/>
+    <path d="M850 557 C 900 557, 900 420, 946 420" marker-end="url(#arrow2)"/>
+  </g>
+  <g transform="translate(956,336)">
+    <rect width="230" height="128" rx="14" fill="#0e0e0e" stroke="#4fd873" stroke-opacity="0.5"/>
+    <text x="26" y="46" font-size="22" font-weight="600" fill="#fff">Go / no-go</text>
+    <text x="26" y="78" font-size="15" fill="#a1a1a1">One merged decision</text>
+    <text x="26" y="100" font-size="15" fill="#7d7d7d">with the blocking items</text>
+  </g>
+
+  <text x="64" y="676" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="676" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">npx skills add addyosmani/agent-skills</text>
+</svg>

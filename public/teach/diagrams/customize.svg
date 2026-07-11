@@ -1,0 +1,72 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0l6 3-6 3" fill="none" stroke="#565656" stroke-width="1.4"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Customize for your stack</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">Skills are plain Markdown. Install all, pick a few, edit them, or write your own.</text>
+
+  <!-- 4 lanes -->
+  <g>
+    <g transform="translate(80,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#52a8ff">1</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Install all</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">One command drops all</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">24 skills into 70+ agents.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#52a8ff">npx skills add ...</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for a fresh start</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">or trying it all out.</text>
+    </g>
+
+    <g transform="translate(360,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#3ed6c5">2</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Pick a few</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Load only what the task</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">needs. Context is a budget.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="11.5" fill="#3ed6c5">--skill test-driven-...</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best when you already</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">have conventions.</text>
+    </g>
+
+    <g transform="translate(640,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#f5b13a">3</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Edit them</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Fork a SKILL.md and add</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">your rules, stack, taste.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#f5b13a">edit skills/*/SKILL.md</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for team standards</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">and house style.</text>
+    </g>
+
+    <g transform="translate(920,262)">
+      <rect width="264" height="330" rx="14" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.3"/>
+      <text x="26" y="52" font-size="34" font-weight="700" fill="#f56ba0">4</text>
+      <text x="26" y="92" font-size="21" font-weight="600" fill="#fff">Write your own</text>
+      <text x="26" y="126" font-size="15" fill="#a1a1a1">Same anatomy: process,</text>
+      <text x="26" y="148" font-size="15" fill="#a1a1a1">guardrails, verification.</text>
+      <rect x="20" y="176" width="224" height="44" rx="8" fill="#0b0b0b" stroke="#2e2e2e"/>
+      <text x="34" y="203" font-family="'Geist Mono',monospace" font-size="12.5" fill="#f56ba0">new SKILL.md</text>
+      <text x="26" y="260" font-size="14" fill="#7d7d7d">Best for domain logic</text>
+      <text x="26" y="282" font-size="14" fill="#7d7d7d">unique to your product.</text>
+    </g>
+  </g>
+
+  <text x="64" y="656" font-size="16" fill="#7d7d7d">Commit the edited skills to version control so your whole team and their agents share one source of truth.</text>
+
+  <text x="64" y="694" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="694" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">MIT licensed</text>
+</svg>

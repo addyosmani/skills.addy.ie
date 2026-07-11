@@ -1,0 +1,70 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Anatomy of a skill</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">A workflow the agent follows, not a doc it reads. Every skill has the same shape.</text>
+
+  <!-- SKILL.md card -->
+  <g transform="translate(80,250)">
+    <rect width="470" height="400" rx="16" fill="#0e0e0e" stroke="#2e2e2e"/>
+    <rect x="0" y="0" width="470" height="52" rx="16" fill="#141414"/>
+    <rect x="0" y="30" width="470" height="22" fill="#141414"/>
+    <circle cx="28" cy="26" r="6" fill="#f56ba0"/><circle cx="50" cy="26" r="6" fill="#f5b13a"/><circle cx="72" cy="26" r="6" fill="#4fd873"/>
+    <text x="240" y="31" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="15" fill="#a1a1a1">SKILL.md</text>
+
+    <rect x="24" y="74" width="422" height="70" rx="10" fill="#0b0b0b" stroke="#52a8ff" stroke-opacity="0.35"/>
+    <text x="40" y="102" font-family="'Geist Mono',monospace" font-size="14" fill="#52a8ff">name:</text>
+    <text x="100" y="102" font-family="'Geist Mono',monospace" font-size="14" fill="#ededed">code-review-and-quality</text>
+    <text x="40" y="126" font-family="'Geist Mono',monospace" font-size="14" fill="#52a8ff">description:</text>
+    <text x="150" y="126" font-family="'Geist Mono',monospace" font-size="14" fill="#a1a1a1">Use when...</text>
+
+    <g font-family="'Geist Mono',monospace" font-size="15" fill="#ededed">
+      <text x="40" y="182">Overview</text>
+      <text x="40" y="222">When to Use</text>
+      <text x="40" y="262">Process</text>
+      <text x="40" y="302">Rationalizations</text>
+      <text x="40" y="342">Red Flags</text>
+      <text x="40" y="382">Verification</text>
+    </g>
+  </g>
+
+  <!-- annotations -->
+  <g>
+    <g transform="translate(610,246)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#52a8ff">FRONTMATTER</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Routing metadata. The `description`</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">carries the words users actually say.</text>
+    </g>
+    <g transform="translate(610,336)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#3ed6c5">THE WORKFLOW</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Overview, triggers, and the</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">step-by-step process to follow.</text>
+    </g>
+    <g transform="translate(610,432)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#f56ba0">THE GUARDRAILS</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Anti-rationalization table plus</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">Red Flags close the shortcuts.</text>
+    </g>
+    <g transform="translate(610,528)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#4fd873">THE PROOF</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Exit criteria demand evidence:</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">tests, build output, runtime data.</text>
+    </g>
+  </g>
+  <line x1="556" y1="300" x2="600" y2="300" stroke="#2e2e2e"/>
+  <line x1="556" y1="390" x2="600" y2="390" stroke="#2e2e2e"/>
+  <line x1="556" y1="486" x2="600" y2="486" stroke="#2e2e2e"/>
+  <line x1="556" y1="562" x2="600" y2="562" stroke="#2e2e2e"/>
+
+  <text x="64" y="686" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="686" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">24 structured skills</text>
+</svg>

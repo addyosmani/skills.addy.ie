@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>agent-skills 101 - Production-grade skills for AI coding agents</title>
+<meta name="description" content="Production-grade skills for AI coding agents. A shareable deck from skills.addy.ie."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --accent:#52a8ff;
+    --bg:#000;--surface:#0e0e0e;--border:#2e2e2e;--hair:#1f1f1f;
+    --fg:#ededed;--bright:#fff;--muted:#a1a1a1;--dim:#7d7d7d;--faint:#565656;
+    --sans:'Geist','Segoe UI',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:#050505;color:var(--fg);font-family:var(--sans);overflow:hidden}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;padding:3vmin}
+  .slide{
+    position:relative;display:none;flex-direction:column;justify-content:center;
+    width:min(100%,177.7vh);aspect-ratio:16/9;max-height:100%;
+    background:radial-gradient(120% 100% at 50% 0%,#0b0d10,#000 70%);
+    border:1px solid var(--hair);border-radius:16px;overflow:hidden;
+    padding:7% 8%;
+  }
+  .slide.active{display:flex}
+  .slide::before{content:'';position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask:radial-gradient(90% 70% at 50% 0%,#000,transparent);mask:radial-gradient(90% 70% at 50% 0%,#000,transparent);pointer-events:none}
+  .s{position:relative;z-index:1}
+  .kicker{font-family:var(--mono);font-size:1.5vh;letter-spacing:.28em;color:var(--accent);text-transform:uppercase}
+  h1{font-size:8.4vh;font-weight:700;letter-spacing:-.03em;line-height:1.02;margin-top:2.4vh;
+     background:linear-gradient(180deg,#fff,#bcbcbc);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:5.2vh;font-weight:600;letter-spacing:-.02em;line-height:1.08;margin-top:2vh;color:var(--bright)}
+  h2.big{font-size:6.6vh;max-width:15ch}
+  .sub{margin-top:2.4vh;font-size:2.7vh;line-height:1.5;color:var(--muted);max-width:40ch}
+  .foot-note{margin-top:5vh;font-size:2vh;color:var(--dim)}
+  .s-bullets ul{margin-top:3.6vh;list-style:none;display:flex;flex-direction:column;gap:2.4vh}
+  .s-bullets li{position:relative;padding-left:4vh;font-size:3vh;line-height:1.35;color:var(--fg);max-width:44ch}
+  .s-bullets li::before{content:'';position:absolute;left:0;top:1.4vh;width:1.4vh;height:1.4vh;border-radius:3px;
+    background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .img-wrap{margin-top:3vh;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#000;max-height:62vh;display:flex}
+  .img-wrap img,.img-wrap svg{display:block;width:100%;height:auto;max-height:62vh}
+  .caption{margin-top:2.2vh;font-size:2.1vh;color:var(--dim);max-width:60ch}
+  .cmd{margin-top:3.4vh;display:inline-block;font-family:var(--mono);font-size:3vh;color:var(--fg);
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2.4vh 3vh}
+  .cmd .prompt{color:var(--accent);margin-right:1.2vh}
+  .s-commands table{margin-top:3.2vh;border-collapse:collapse;width:100%;font-size:2.5vh}
+  .s-commands td{padding:1.5vh 1vh;border-bottom:1px solid var(--hair);vertical-align:middle}
+  .s-commands .cmd-cell{font-family:var(--mono);color:var(--accent);width:26%}
+  .s-commands .dim{color:var(--faint);text-align:right;font-size:2.1vh}
+  .s-cta{text-align:center;align-items:center;display:flex;flex-direction:column}
+  .s-cta h2{font-size:5.6vh;max-width:20ch}
+  .s-cta .cmd{margin-top:4vh}
+  .links{margin-top:3.4vh;display:flex;gap:3vh;font-family:var(--mono);font-size:2vh;color:var(--dim);flex-wrap:wrap;justify-content:center}
+  .brand-foot{position:absolute;left:8%;right:8%;bottom:4.2%;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:1.7vh;color:var(--faint);z-index:1}
+  .bf-brand{color:var(--muted)}.bf-dim{color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;transition:width .25s ease;z-index:10}
+  .nav{position:fixed;bottom:14px;right:16px;display:flex;gap:8px;z-index:10}
+  .nav button{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:rgba(14,14,14,.8);
+    color:var(--muted);font-size:16px;cursor:pointer;backdrop-filter:blur(8px)}
+  .nav button:hover{color:#fff;border-color:#3a3a3a}
+  .hint{position:fixed;bottom:20px;left:16px;font-family:var(--mono);font-size:12px;color:var(--faint);z-index:10}
+  @media print{
+    @page{size:1280px 720px;margin:0}
+    body{overflow:visible}.stage{position:static;padding:0}
+    .progress,.nav,.hint{display:none}
+    .slide{display:flex!important;width:1280px;height:720px;aspect-ratio:auto;max-height:none;border-radius:0;page-break-after:always;border:0}
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="stage">
+    <section class="slide" data-i="0"><div class="s s-title">
+        <span class="kicker">THE 101</span>
+        <h1>agent-skills</h1>
+        <p class="sub">Production-grade engineering skills for AI coding agents</p>
+        <p class="foot-note">What they are, and why they matter.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">1 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="1"><div class="s s-statement">
+        <span class="kicker">THE PROBLEM</span>
+        <h2 class="big">AI coding agents default to the shortest path.</h2>
+        <p class="sub">That usually means skipping specs, tests, and reviews. The practices that make software reliable are the first to go.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">2 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="2"><div class="s s-bullets">
+        <span class="kicker">THE IDEA</span>
+        <h2>A skill is a workflow, not a prompt</h2>
+        <ul><li>Structured steps the agent follows, with checkpoints and exit criteria</li><li>An anti-rationalization table that rebuts the excuses to skip a step</li><li>Red flags that signal the process is being violated</li><li>Verification that demands evidence: tests, build output, runtime data</li></ul>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">3 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="3"><div class="s s-diagram">
+        <span class="kicker">ANATOMY</span>
+        <h2>Every skill has the same shape</h2>
+        <div class="img-wrap"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/><rect width="1280" height="720" fill="url(#grid)"/>
+
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">Anatomy of a skill</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">A workflow the agent follows, not a doc it reads. Every skill has the same shape.</text>
+
+  <!-- SKILL.md card -->
+  <g transform="translate(80,250)">
+    <rect width="470" height="400" rx="16" fill="#0e0e0e" stroke="#2e2e2e"/>
+    <rect x="0" y="0" width="470" height="52" rx="16" fill="#141414"/>
+    <rect x="0" y="30" width="470" height="22" fill="#141414"/>
+    <circle cx="28" cy="26" r="6" fill="#f56ba0"/><circle cx="50" cy="26" r="6" fill="#f5b13a"/><circle cx="72" cy="26" r="6" fill="#4fd873"/>
+    <text x="240" y="31" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="15" fill="#a1a1a1">SKILL.md</text>
+
+    <rect x="24" y="74" width="422" height="70" rx="10" fill="#0b0b0b" stroke="#52a8ff" stroke-opacity="0.35"/>
+    <text x="40" y="102" font-family="'Geist Mono',monospace" font-size="14" fill="#52a8ff">name:</text>
+    <text x="100" y="102" font-family="'Geist Mono',monospace" font-size="14" fill="#ededed">code-review-and-quality</text>
+    <text x="40" y="126" font-family="'Geist Mono',monospace" font-size="14" fill="#52a8ff">description:</text>
+    <text x="150" y="126" font-family="'Geist Mono',monospace" font-size="14" fill="#a1a1a1">Use when...</text>
+
+    <g font-family="'Geist Mono',monospace" font-size="15" fill="#ededed">
+      <text x="40" y="182">Overview</text>
+      <text x="40" y="222">When to Use</text>
+      <text x="40" y="262">Process</text>
+      <text x="40" y="302">Rationalizations</text>
+      <text x="40" y="342">Red Flags</text>
+      <text x="40" y="382">Verification</text>
+    </g>
+  </g>
+
+  <!-- annotations -->
+  <g>
+    <g transform="translate(610,246)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#52a8ff">FRONTMATTER</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Routing metadata. The `description`</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">carries the words users actually say.</text>
+    </g>
+    <g transform="translate(610,336)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#3ed6c5">THE WORKFLOW</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Overview, triggers, and the</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">step-by-step process to follow.</text>
+    </g>
+    <g transform="translate(610,432)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#f56ba0">THE GUARDRAILS</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Anti-rationalization table plus</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">Red Flags close the shortcuts.</text>
+    </g>
+    <g transform="translate(610,528)">
+      <text x="0" y="0" font-family="'Geist Mono',monospace" font-size="13" letter-spacing="2" fill="#4fd873">THE PROOF</text>
+      <text x="0" y="26" font-size="16" fill="#ededed">Exit criteria demand evidence:</text>
+      <text x="0" y="48" font-size="16" fill="#a1a1a1">tests, build output, runtime data.</text>
+    </g>
+  </g>
+  <line x1="556" y1="300" x2="600" y2="300" stroke="#2e2e2e"/>
+  <line x1="556" y1="390" x2="600" y2="390" stroke="#2e2e2e"/>
+  <line x1="556" y1="486" x2="600" y2="486" stroke="#2e2e2e"/>
+  <line x1="556" y1="562" x2="600" y2="562" stroke="#2e2e2e"/>
+
+  <text x="64" y="686" font-family="'Geist Mono',monospace" font-size="16" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="686" text-anchor="end" font-family="'Geist Mono',monospace" font-size="16" fill="#a1a1a1">24 structured skills</text>
+</svg>
+</div>
+        <p class="caption">Frontmatter routes the work. The body is a process. Guardrails and proof are built in.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">4 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="4"><div class="s s-diagram">
+        <span class="kicker">THE LIFECYCLE</span>
+        <h2>One command per phase, Define to Ship</h2>
+        <div class="img-wrap"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="Geist, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#000"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#52a8ff"/><stop offset="0.2" stop-color="#8b7dff"/>
+      <stop offset="0.4" stop-color="#3ed6c5"/><stop offset="0.6" stop-color="#f5b13a"/>
+      <stop offset="0.8" stop-color="#f56ba0"/><stop offset="1" stop-color="#4fd873"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+
+  <!-- header -->
+  <g transform="translate(64,60)">
+    <path d="M2 8 18 0l16 8v16l-16 8-16-8V8Z" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M18 0v32M2 8l16 8 16-8" fill="none" stroke="#52a8ff" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+    <text x="48" y="23" font-size="22" font-weight="600" fill="#fff">agent<tspan fill="#7d7d7d">-skills</tspan></text>
+  </g>
+  <text x="64" y="150" font-size="46" font-weight="700" letter-spacing="-1.5" fill="#fff">The software lifecycle, one command per phase</text>
+  <text x="64" y="192" font-size="21" fill="#a1a1a1">Skills load automatically for each phase. A human checkpoint stays at every step.</text>
+
+  <!-- flow line -->
+  <line x1="120" y1="360" x2="1160" y2="360" stroke="url(#flow)" stroke-width="2.5" opacity="0.7"/>
+
+  <!-- phases -->
+  <g font-family="Geist, Arial, sans-serif">
+    <!-- DEFINE -->
+    <g transform="translate(64,290)">
+      <circle cx="56" cy="70" r="9" fill="#52a8ff"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#52a8ff">DEFINE</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#52a8ff" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Idea</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Spec / PRD</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/spec</text>
+    </g>
+    <!-- PLAN -->
+    <g transform="translate(240,290)">
+      <circle cx="56" cy="70" r="9" fill="#8b7dff"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#8b7dff">PLAN</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#8b7dff" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Tasks</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Small, ordered</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/plan</text>
+    </g>
+    <!-- BUILD -->
+    <g transform="translate(416,290)">
+      <circle cx="56" cy="70" r="9" fill="#3ed6c5"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#3ed6c5">BUILD</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#3ed6c5" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Code</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Thin slices</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/build</text>
+    </g>
+    <!-- VERIFY -->
+    <g transform="translate(592,290)">
+      <circle cx="56" cy="70" r="9" fill="#f5b13a"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#f5b13a">VERIFY</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#f5b13a" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Test</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Prove it works</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/test</text>
+    </g>
+    <!-- REVIEW -->
+    <g transform="translate(768,290)">
+      <circle cx="56" cy="70" r="9" fill="#f56ba0"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#f56ba0">REVIEW</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#f56ba0" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Gate</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Quality axes</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/review</text>
+    </g>
+    <!-- SHIP -->
+    <g transform="translate(944,290)">
+      <circle cx="56" cy="70" r="9" fill="#4fd873"/>
+      <text x="56" y="-4" text-anchor="middle" font-family="'Geist Mono',monospace" font-size="14" letter-spacing="3" fill="#4fd873">SHIP</text>
+      <rect x="0" y="18" width="152" height="104" rx="12" fill="#0e0e0e" stroke="#4fd873" stroke-opacity="0.4"/>
+      <text x="20" y="52" font-size="26" font-weight="600" fill="#fff">Go live</text>
+      <text x="20" y="78" font-size="14" fill="#7d7d7d">Roll out safely</text>
+      <text x="20" y="104" font-family="'Geist Mono',monospace" font-size="13" fill="#a1a1a1">/ship</text>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <line x1="64" y1="600" x2="1216" y2="600" stroke="#1f1f1f"/>
+  <text x="64" y="646" font-family="'Geist Mono',monospace" font-size="17" fill="#565656">skills.addy.ie</text>
+  <text x="1216" y="646" text-anchor="end" font-family="'Geist Mono',monospace" font-size="17" fill="#a1a1a1">npx skills add addyosmani/agent-skills</text>
+</svg>
+</div>
+        <p class="caption">24 skills spanning the whole SDLC. The right ones load automatically for each phase.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">5 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="5"><div class="s s-code">
+        <span class="kicker">GET STARTED</span>
+        <h2>Install into 70+ agents in one command</h2>
+        <pre class="cmd"><span class="prompt">$</span> npx skills add addyosmani/agent-skills</pre>
+        <p class="sub">Works with Claude Code, Codex, Cursor, Copilot, and more. Or add a single skill with --skill.</p>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">6 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="6"><div class="s s-bullets">
+        <span class="kicker">YOUR FIRST WIN</span>
+        <h2>Start with a spec, then build</h2>
+        <ul><li>Run /spec to write a short PRD before any code</li><li>Run /build to implement in thin, tested slices</li><li>Every slice is committed and verified individually</li><li>You approve at each checkpoint. Nothing ships on vibes.</li></ul>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">7 / 8</span>
+          </footer>
+        </section>
+<section class="slide" data-i="7"><div class="s s-cta">
+        <h2>Give your agent a senior engineer’s instincts</h2>
+        <pre class="cmd"><span class="prompt">$</span> npx skills add addyosmani/agent-skills</pre>
+        <div class="links"><span>skills.addy.ie</span><span>github.com/addyosmani/agent-skills</span></div>
+      </div>
+          <footer class="brand-foot">
+            <span class="bf-brand">agent<span class="bf-dim">-skills</span></span>
+            <span class="bf-mid">agent-skills 101</span>
+            <span class="bf-page">8 / 8</span>
+          </footer>
+        </section>
+  </div>
+  <div class="hint">← → to navigate · F fullscreen · P print / PDF</div>
+  <div class="nav">
+    <button id="prev" aria-label="Previous">‹</button>
+    <button id="next" aria-label="Next">›</button>
+  </div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const prog=document.getElementById('progress');
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    prog.style.width=((i+1)/slides.length*100)+'%';
+    location.hash=i+1;}
+  function next(){show(i+1)} function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
+    else if(e.key==='p'||e.key==='P'){window.print()}
+  });
+  addEventListener('click',e=>{if(e.target.closest('.nav')||e.target.closest('a'))return;
+    const x=e.clientX/innerWidth; if(x>0.6)next(); else if(x<0.4)prev();});
+  show(parseInt(location.hash.slice(1))-1||0);
+</script>
+</body>
+</html>

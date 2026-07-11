@@ -1,0 +1,549 @@
+---
+import Base from '../layouts/Base.astro';
+import CopyCommand from '../components/CopyCommand.astro';
+import { diagrams, decks, usageModes, REPO } from '../data/teach';
+import { INSTALL_CMD } from '../data/skills';
+
+const tagline = 'Production-grade engineering skills for AI coding agents. Encode senior-engineer workflows across the full software lifecycle.';
+const shareLine = 'agent-skills: production-grade skills that make AI coding agents follow a real SDLC. Install into 70+ agents with one command. https://skills.addy.ie';
+---
+
+<Base
+  title="Teach & share - agent-skills media kit"
+  description="Ready-to-share, on-brand resources: SVG and PNG workflow diagrams, 101/201/301 slide decks (HTML and PPTX), and clear solo, team, and customization guides for the agent-skills SDLC."
+>
+  <!-- HERO -->
+  <section class="t-hero">
+    <div class="grid-bg"></div>
+    <div class="t-hero-glow" aria-hidden="true"></div>
+    <div class="container t-hero-inner">
+      <span class="eyebrow">Teach &amp; share</span>
+      <h1 class="t-h1">A media kit for the whole SDLC story</h1>
+      <p class="t-lede">
+        Everything you need to explain, teach, or post about agent-skills. Branded
+        workflow diagrams, ready-to-present decks, and plain-language guides for solo work,
+        teams, and customization. Grab anything here and reuse it freely. MIT licensed, no sign-up.
+      </p>
+      <div class="t-hero-cta">
+        <a href="#diagrams" class="btn btn-primary">Get the diagrams</a>
+        <a href="#decks" class="btn btn-secondary">Browse the decks</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECKS / TRACKS -->
+  <section class="section" id="decks">
+    <div class="container">
+      <div class="t-head reveal">
+        <span class="eyebrow"><span class="t-num">01</span> Learning tracks</span>
+        <h2 class="section-title">101, 201, 301 - present or share in minutes</h2>
+        <p class="section-lede">
+          Three self-contained decks that build from first principles to team rollout. Present
+          the HTML version right in the browser (arrow keys, F for fullscreen, P for PDF), or
+          download the PPTX to edit and make your own.
+        </p>
+      </div>
+
+      <div class="deck-grid reveal">
+        {decks.map((d) => (
+          <article class="card deck-card" style={`--h:${d.hue}`}>
+            <div class="deck-top">
+              <span class="deck-level mono">{d.level}</span>
+              <span class="deck-slides mono">{d.slides} slides</span>
+            </div>
+            <h3 class="deck-title">{d.title}</h3>
+            <p class="deck-blurb">{d.blurb}</p>
+            <ul class="deck-covers">
+              {d.covers.map((c) => <li>{c}</li>)}
+            </ul>
+            <div class="deck-actions">
+              <a href={`/teach/decks/${d.slug}.html`} target="_blank" rel="noopener" class="btn btn-primary deck-btn">
+                Present
+                <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a href={`/teach/decks/${d.slug}.pptx`} download class="btn btn-secondary deck-btn">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0 3-3m-3 3L5 7M3 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                PPTX
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- DIAGRAMS -->
+  <section class="section" id="diagrams">
+    <div class="container">
+      <div class="t-head reveal">
+        <span class="eyebrow"><span class="t-num">02</span> Workflow diagrams</span>
+        <h2 class="section-title">Drop-in visuals, on brand</h2>
+        <p class="section-lede">
+          Five diagrams that explain the model at a glance. Download the SVG to keep it crisp
+          at any size, or the PNG for a quick paste into a post, slide, or thread.
+        </p>
+      </div>
+
+      <div class="diagram-grid reveal">
+        {diagrams.map((d) => (
+          <figure class="card diagram-card" style={`--h:${d.hue}`}>
+            <a href={`/teach/diagrams/${d.slug}.svg`} target="_blank" rel="noopener" class="diagram-frame">
+              <img src={`/teach/diagrams/${d.slug}.svg`} alt={d.title} loading="lazy" width="1280" height="720" />
+            </a>
+            <figcaption class="diagram-meta">
+              <div class="diagram-text">
+                <h3 class="diagram-title">{d.title}</h3>
+                <p class="diagram-blurb">{d.blurb}</p>
+              </div>
+              <div class="diagram-dl">
+                <a href={`/teach/diagrams/${d.slug}.svg`} download class="dl-btn">SVG</a>
+                <a href={`/teach/diagrams/${d.slug}.png`} download class="dl-btn">PNG</a>
+              </div>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- HOW YOU USE IT -->
+  <section class="section">
+    <div class="container">
+      <div class="t-head reveal">
+        <span class="eyebrow"><span class="t-num">03</span> How you use it</span>
+        <h2 class="section-title">Same lifecycle, solo or as a team</h2>
+        <p class="section-lede">
+          The SDLC is the spine of the whole project. Here is how it plays out when you work
+          alone, when you work on a team, and how to customize it for your own stack.
+        </p>
+      </div>
+
+      <div class="modes reveal">
+        {usageModes.map((m, i) => (
+          <article class="mode-row" style={`--h:${m.hue ?? 205}`} data-flip={i % 2 === 1}>
+            <a href={`/teach/diagrams/${m.diagram}.svg`} target="_blank" rel="noopener" class="mode-figure">
+              <img src={`/teach/diagrams/${m.diagram}.svg`} alt={m.headline} loading="lazy" width="1280" height="720" />
+            </a>
+            <div class="mode-copy">
+              <span class="mode-label mono">{m.label}</span>
+              <h3 class="mode-headline">{m.headline}</h3>
+              <p class="mode-body">{m.body}</p>
+              <ul class="mode-points">
+                {m.points.map((p) => <li>{p}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- SHARE KIT -->
+  <section class="section">
+    <div class="container">
+      <div class="t-head reveal">
+        <span class="eyebrow"><span class="t-num">04</span> Share kit</span>
+        <h2 class="section-title">Copy, paste, post</h2>
+        <p class="section-lede">Snippets and assets sized for a quick share. Everything is copy-ready.</p>
+      </div>
+
+      <div class="share-grid reveal">
+        <div class="card share-card">
+          <h3 class="share-title">Install command</h3>
+          <CopyCommand command={INSTALL_CMD} size="sm" />
+        </div>
+        <div class="card share-card">
+          <h3 class="share-title">One-line tagline</h3>
+          <CopyCommand command={tagline} size="sm" />
+        </div>
+        <div class="card share-card share-wide">
+          <h3 class="share-title">Ready-to-post blurb</h3>
+          <CopyCommand command={shareLine} size="sm" />
+        </div>
+        <div class="card share-card">
+          <h3 class="share-title">Brand assets</h3>
+          <div class="asset-links">
+            <a href="/favicon.svg" download class="dl-btn">Logo SVG</a>
+            <a href="/og.png" download class="dl-btn">Social card PNG</a>
+            <a href={REPO} target="_blank" rel="noopener" class="dl-btn">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section t-cta">
+    <div class="container t-cta-inner reveal">
+      <h2 class="t-cta-title">Made something with these?</h2>
+      <p class="t-cta-sub">Tag the project so others can find it. Everything here is MIT licensed and free to reuse.</p>
+      <div class="t-cta-links">
+        <a href="/docs/getting-started" class="btn btn-primary">Get started</a>
+        <a href={REPO} target="_blank" rel="noopener" class="btn btn-secondary">Star on GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .t-hero {
+    position: relative;
+    padding-block: clamp(52px, 9vw, 96px) 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 30%;
+    width: 720px;
+    height: 480px;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(82, 168, 255, 0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .t-hero-inner {
+    position: relative;
+    max-width: 760px;
+  }
+  .t-h1 {
+    margin-top: 16px;
+    font-size: clamp(2.1rem, 5.2vw, 3.2rem);
+    letter-spacing: -0.03em;
+    line-height: 1.03;
+  }
+  .t-lede {
+    margin-top: 18px;
+    color: var(--fg-muted);
+    font-size: clamp(1rem, 1.7vw, 1.16rem);
+    line-height: 1.6;
+    max-width: 660px;
+  }
+  .t-hero-cta {
+    margin-top: 28px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .t-head {
+    max-width: 720px;
+    margin-bottom: 44px;
+  }
+  .t-head .section-title {
+    margin-top: 16px;
+  }
+  .t-num {
+    color: var(--fg-faint);
+  }
+
+  /* Decks */
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .deck-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow: hidden;
+  }
+  .deck-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--h) 70% 60%), transparent);
+  }
+  .deck-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .deck-level {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: hsl(var(--h) 60% 70%);
+    letter-spacing: -0.02em;
+  }
+  .deck-slides {
+    font-size: 12px;
+    color: var(--fg-faint);
+  }
+  .deck-title {
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+  }
+  .deck-blurb {
+    margin-top: 10px;
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .deck-covers {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+  }
+  .deck-covers li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--fg-dim);
+    font-size: 0.84rem;
+  }
+  .deck-covers li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: hsl(var(--h) 65% 58%);
+  }
+  .deck-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .deck-btn {
+    height: 40px;
+    flex: 1;
+    font-size: 0.88rem;
+  }
+
+  /* Diagrams */
+  .diagram-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .diagram-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+  }
+  .diagram-frame {
+    display: block;
+    border-bottom: 1px solid var(--border);
+    background: #000;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .diagram-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s var(--ease);
+  }
+  .diagram-card:hover .diagram-frame img {
+    transform: scale(1.02);
+  }
+  .diagram-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px 20px;
+  }
+  .diagram-title {
+    font-size: 1.02rem;
+  }
+  .diagram-blurb {
+    margin-top: 6px;
+    color: var(--fg-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    max-width: 42ch;
+  }
+  .diagram-dl {
+    display: flex;
+    gap: 8px;
+    flex: none;
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding-inline: 12px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    transition: all 0.15s;
+  }
+  .dl-btn:hover {
+    color: var(--fg-bright);
+    border-color: var(--border-hover);
+    background: var(--surface-2);
+  }
+
+  /* Modes */
+  .modes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .mode-row {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+  }
+  .mode-row[data-flip='true'] .mode-figure {
+    order: 2;
+  }
+  .mode-figure {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9;
+  }
+  .mode-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .mode-label {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: hsl(var(--h) 60% 70%);
+  }
+  .mode-headline {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .mode-body {
+    margin-top: 12px;
+    color: var(--fg-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+  .mode-points {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .mode-points li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--fg-dim);
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+  .mode-points li::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: hsl(var(--h) 65% 58%);
+  }
+
+  /* Share */
+  .share-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .share-card {
+    padding: 22px;
+  }
+  .share-wide {
+    grid-column: 1 / -1;
+  }
+  .share-title {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-dim);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .asset-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .asset-links .dl-btn {
+    height: 36px;
+  }
+
+  /* CTA */
+  .t-cta {
+    text-align: center;
+  }
+  .t-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .t-cta-title {
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    letter-spacing: -0.02em;
+  }
+  .t-cta-sub {
+    margin-top: 12px;
+    color: var(--fg-muted);
+    max-width: 480px;
+  }
+  .t-cta-links {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 900px) {
+    .deck-grid {
+      grid-template-columns: 1fr;
+    }
+    .mode-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .mode-row[data-flip='true'] .mode-figure {
+      order: 0;
+    }
+  }
+  @media (max-width: 720px) {
+    .diagram-grid {
+      grid-template-columns: 1fr;
+    }
+    .share-grid {
+      grid-template-columns: 1fr;
+    }
+    .diagram-meta {
+      flex-direction: column;
+    }
+  }
+</style>

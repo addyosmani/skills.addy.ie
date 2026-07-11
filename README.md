@@ -52,6 +52,23 @@ Skill content is sourced from the [agent-skills](https://github.com/addyosmani/a
 repo. To add or edit a skill card, update [`src/data/skills.ts`](src/data/skills.ts) - detail
 pages, the explorer, the lifecycle page, and the sitemap all regenerate from that single file.
 
+## Teach / media kit assets
+
+The `/teach` page serves reusable resources from `public/teach/`:
+
+- **Diagrams** (`public/teach/diagrams/*.svg`) are hand-authored. Their `.png` twins are
+  rasterized with resvg (see the OG one-liner below, pointed at the diagrams folder).
+- **Decks** (`public/teach/decks/`) are generated from one source of truth,
+  [`scripts/deck-data.mjs`](scripts/deck-data.mjs):
+
+  ```bash
+  node scripts/build-decks.mjs      # writes the self-contained HTML decks + deck-data.json
+  python3 scripts/build_pptx.py     # writes the PPTX decks (needs python-pptx)
+  ```
+
+  Edit the slide content in `deck-data.mjs`, then rerun both. HTML decks inline the diagram
+  SVGs so they work offline; PPTX decks embed the PNGs. Keep all of it free of em dashes.
+
 ## Regenerating the OG image
 
 The social card lives at `public/og.png`, rasterized from `scripts/og.svg`:
