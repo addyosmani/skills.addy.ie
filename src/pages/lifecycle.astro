@@ -69,7 +69,7 @@ const orderedGroups = skillsByPhase.filter((g) => g.skills.length > 0);
           <ul class="phase-skills">
             {group.skills.map((s) => (
               <li>
-                <a href={`/skills/${s.slug}`} class="phase-skill">
+                <a href={`/skills/${s.slug}/`} class="phase-skill">
                   <span class="phase-skill-name mono">{s.name}</span>
                   <span class="phase-skill-sum">{s.summary}</span>
                   <span class="phase-skill-arrow" aria-hidden="true">→</span>
