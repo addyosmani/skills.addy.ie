@@ -46,6 +46,7 @@ const orderedGroups = skillsByPhase.filter((g) => g.skills.length > 0);
       implements every task in one approved pass - you approve the plan once, then it runs
       autonomously. It removes the human stepping <em>between</em> tasks, not the verification:
       every task is still test-driven and committed individually, and it pauses on failures.
+      Running the skills inside loops or a software factory? See <a href="/loops/">loop engineering</a>.
     </p>
   </section>
 
@@ -165,6 +166,11 @@ const orderedGroups = skillsByPhase.filter((g) => g.skills.length > 0);
     color: var(--accent);
     font-family: var(--font-mono);
     font-size: 0.88em;
+  }
+  .lc-auto-note a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .lc-phases {

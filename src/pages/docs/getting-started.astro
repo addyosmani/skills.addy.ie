@@ -172,6 +172,10 @@ const first10 = [
         <h3>Learn the lifecycle →</h3>
         <p>How the eight commands map to Define → Ship.</p>
       </a>
+      <a href="/loops/" class="card next-card">
+        <h3>Loop engineering →</h3>
+        <p>Using the skills inside loops and software factories, and where the human stays.</p>
+      </a>
       <a href="/compare/" class="card next-card">
         <h3>How it compares →</h3>
         <p>Honest positioning vs Superpowers and Matt Pocock’s skills.</p>
@@ -355,7 +359,7 @@ const first10 = [
   /* Next cards */
   .next-cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 14px;
   }
   .next-card {
