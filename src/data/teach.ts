@@ -129,4 +129,58 @@ export const usageModes: UsageMode[] = [
   },
 ];
 
+export interface Sticker {
+  slug: string;
+  title: string;
+  blurb: string;
+  hue: number;
+  pngSize: string;
+  webpSize: string;
+  png600Size: string;
+  webp600Size: string;
+}
+
+export const stickers: Sticker[] = [
+  {
+    slug: 'retro-computer',
+    title: 'Retro terminal',
+    blurb: 'A beige-era workstation announcing the good news, flowers included.',
+    hue: 45,
+    pngSize: '2.0 MB',
+    webpSize: '0.6 MB',
+    png600Size: '7.2 MB',
+    webp600Size: '1.5 MB',
+  },
+  {
+    slug: 'circuit-heart',
+    title: 'Circuit heart',
+    blurb: 'Old-school tattoo heart, rewired with traces and a happy robot.',
+    hue: 340,
+    pngSize: '1.3 MB',
+    webpSize: '0.5 MB',
+    png600Size: '4.4 MB',
+    webp600Size: '1.2 MB',
+  },
+  {
+    slug: 'merit-badge',
+    title: 'Merit badge',
+    blurb: 'A rosette, a star, and ribbons. You earned it, wear it.',
+    hue: 205,
+    pngSize: '1.4 MB',
+    webpSize: '0.5 MB',
+    png600Size: '4.7 MB',
+    webp600Size: '1.1 MB',
+  },
+  {
+    slug: 'tattoo-heart',
+    title: 'Robot romance',
+    blurb: 'Classic flash-art heart with a robot that clearly loves its job.',
+    hue: 5,
+    pngSize: '1.4 MB',
+    webpSize: '0.5 MB',
+    png600Size: '4.7 MB',
+    webp600Size: '1.1 MB',
+  },
+];
+
 export const REPO = 'https://github.com/addyosmani/agent-skills';

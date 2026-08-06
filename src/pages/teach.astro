@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CopyCommand from '../components/CopyCommand.astro';
-import { diagrams, decks, usageModes, REPO } from '../data/teach';
+import { diagrams, decks, usageModes, stickers, REPO } from '../data/teach';
 import { INSTALL_CMD } from '../data/skills';
 
 const tagline = 'Production-grade engineering skills for AI coding agents. Encode senior-engineer workflows across the full software lifecycle.';
@@ -175,6 +175,66 @@ const shareLine = 'agent-skills: production-grade skills that make AI coding age
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- STICKERS -->
+  <section class="section" id="stickers">
+    <div class="container">
+      <div class="t-head reveal">
+        <span class="eyebrow"><span class="t-num">05</span> Stickers</span>
+        <h2 class="section-title">Print your own "I got agent skills" stickers</h2>
+        <p class="section-lede">
+          Four die-cut-ready designs with transparent backgrounds, in two resolutions: 300 DPI
+          (2508&times;2508) covers most sticker printing, and 600 DPI (5016&times;5016) is there
+          if your printer wants the extra density. Both print crisp up to about 8 in / 21 cm.
+          Download one, upload it to your favorite sticker printer (Sticker Mule, Vistaprint,
+          a local shop), and slap it on a laptop near you.
+        </p>
+      </div>
+
+      <div class="sticker-grid reveal">
+        {stickers.map((s) => (
+          <article class="card sticker-card" style={`--h:${s.hue}`}>
+            <div class="sticker-frame">
+              <img
+                src={`/teach/stickers/${s.slug}-preview.webp`}
+                alt={`"I got agent skills" sticker - ${s.title}`}
+                loading="lazy"
+                width="640"
+                height="640"
+              />
+            </div>
+            <div class="sticker-meta">
+              <div class="sticker-text">
+                <h3 class="sticker-title">{s.title}</h3>
+                <p class="sticker-blurb">{s.blurb}</p>
+              </div>
+              <div class="sticker-dl">
+                <div class="dl-group">
+                  <span class="dl-group-label mono">300 DPI</span>
+                  <a href={`/teach/stickers/${s.slug}.png`} download class="dl-btn">PNG &middot; {s.pngSize}</a>
+                  <a href={`/teach/stickers/${s.slug}.webp`} download class="dl-btn">WebP &middot; {s.webpSize}</a>
+                </div>
+                <div class="dl-group">
+                  <span class="dl-group-label mono">600 DPI</span>
+                  <a href={`/teach/stickers/${s.slug}-600dpi.png`} download class="dl-btn">PNG &middot; {s.png600Size}</a>
+                  <a href={`/teach/stickers/${s.slug}-600dpi.webp`} download class="dl-btn">WebP &middot; {s.webp600Size}</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="sticker-note">
+        Printing tip: pick "die-cut" and the printer will cut along the sticker outline
+        automatically. The transparent PNG is the safe bet everywhere; WebP is the same
+        image in a smaller file, if your printer accepts it. 300 DPI is what most services
+        ask for; grab 600 DPI for large prints or picky print shops.
+      </p>
     </div>
   </section>
 
@@ -497,6 +557,81 @@ const shareLine = 'agent-skills: production-grade skills that make AI coding age
     height: 36px;
   }
 
+  /* Stickers */
+  .sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .sticker-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+  }
+  .sticker-frame {
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    border-bottom: 1px solid var(--border);
+    background:
+      repeating-conic-gradient(rgba(255, 255, 255, 0.035) 0% 25%, transparent 0% 50%)
+      0 0 / 28px 28px,
+      var(--surface-2, rgba(255, 255, 255, 0.02));
+  }
+  .sticker-frame img {
+    width: min(100%, 320px);
+    height: auto;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.45));
+    transition: transform 0.3s var(--ease);
+  }
+  .sticker-card:hover .sticker-frame img {
+    transform: scale(1.03) rotate(-1.5deg);
+  }
+  .sticker-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px 20px;
+  }
+  .sticker-title {
+    font-size: 1.02rem;
+  }
+  .sticker-blurb {
+    margin-top: 6px;
+    color: var(--fg-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    max-width: 34ch;
+  }
+  .sticker-dl {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: none;
+  }
+  .dl-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dl-group-label {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--fg-faint);
+    width: 52px;
+    text-align: right;
+    flex: none;
+  }
+  .sticker-note {
+    margin-top: 20px;
+    color: var(--fg-dim);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    max-width: 68ch;
+  }
+
   /* CTA */
   .t-cta {
     text-align: center;
@@ -542,8 +677,18 @@ const shareLine = 'agent-skills: production-grade skills that make AI coding age
     .share-grid {
       grid-template-columns: 1fr;
     }
+    .sticker-grid {
+      grid-template-columns: 1fr;
+    }
     .diagram-meta {
       flex-direction: column;
+    }
+    .sticker-meta {
+      flex-direction: column;
+    }
+    .dl-group-label {
+      width: auto;
+      text-align: left;
     }
   }
 </style>
